@@ -73,13 +73,13 @@ struct clkctl_acpu_speed {
 #define SRC_PLL1	3 /* 768 MHz */
 
 struct clkctl_acpu_speed acpu_freq_tbl[] = {
-	{  19200, CCTL(CLK_TCXO, 1),		SRC_RAW, 0, 0, 950, 14000}, // 950
-	{ 128000, CCTL(CLK_TCXO, 1),		SRC_AXI, 0, 0, 925, 14000 }, // 950
-	{ 245760, CCTL(CLK_MODEM_PLL, 1),	SRC_RAW, 0, 0, 950, 29000 }, // change vdd to 1000 as evo has issues setting undervolt to 950 or 975
+	{  19200, CCTL(CLK_TCXO, 1),		SRC_RAW, 0, 0, 900, 14000}, // 950
+	{ 128000, CCTL(CLK_TCXO, 1),		SRC_AXI, 0, 0, 900, 14000 }, // 950
+	{ 245760, CCTL(CLK_MODEM_PLL, 1),	SRC_RAW, 0, 0, 925, 29000 }, // change vdd to 1000 as evo has issues setting undervolt to 950 or 975
 	/* Work arround for acpu resume hung, GPLL is turn off by arm9 */
 	/*{ 256000, CCTL(CLK_GLOBAL_PLL, 3),	SRC_RAW, 0, 0, 950, 29000 },*/
-	{ 384000, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0A, 0, 975, 58000 }, // 975
-	{ 422400, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0B, 0, 1000, 117000 }, // 1000
+	{ 384000, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0A, 0, 950, 58000 }, // 975
+	{ 422400, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0B, 0, 975, 117000 }, // 1000
 	{ 460800, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0C, 0, 1000, 117000 },
 	{ 499200, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0D, 0, 1050, 117000 },
 	{ 537600, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0E, 0, 1050, 117000 },
