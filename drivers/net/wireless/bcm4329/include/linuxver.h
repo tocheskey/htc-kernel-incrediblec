@@ -2,11 +2,7 @@
  * Linux-specific abstractions to gain some independence from linux kernel versions.
  * Pave over some 2.2 versus 2.4 versus 2.6 kernel differences.
  *
-<<<<<<< HEAD
- * Copyright (C) 1999-2009, Broadcom Corporation
-=======
  * Copyright (C) 1999-2010, Broadcom Corporation
->>>>>>> origin/incrediblec-2.6.32
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -26,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: linuxver.h,v 13.38.8.1.8.3 2009/06/19 04:42:45 Exp $
-=======
  * $Id: linuxver.h,v 13.38.8.1.8.6 2010/04/29 05:00:46 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 
 
@@ -40,11 +32,7 @@
 #include <linux/version.h>
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 0))
 #include <linux/config.h>
-<<<<<<< HEAD
-#else
-=======
 #elif (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 33))
->>>>>>> origin/incrediblec-2.6.32
 #include <linux/autoconf.h>
 #endif
 #include <linux/module.h>
@@ -78,10 +66,7 @@
 #include <linux/pci.h>
 #include <linux/interrupt.h>
 #include <linux/netdevice.h>
-<<<<<<< HEAD
-=======
 #include <linux/semaphore.h>
->>>>>>> origin/incrediblec-2.6.32
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
 #undef IP_TOS
 #endif 

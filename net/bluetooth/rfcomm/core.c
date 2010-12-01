@@ -252,10 +252,6 @@ static void rfcomm_dlc_timeout(unsigned long arg)
 	BT_DBG("dlc %p state %ld", d, d->state);
 
 	set_bit(RFCOMM_TIMED_OUT, &d->flags);
-<<<<<<< HEAD
-	rfcomm_dlc_put(d);
-=======
->>>>>>> origin/incrediblec-2.6.32
 	rfcomm_schedule(RFCOMM_SCHED_TIMEO);
 }
 
@@ -1742,10 +1738,7 @@ static inline void rfcomm_process_dlcs(struct rfcomm_session *s)
 
 		if (test_bit(RFCOMM_TIMED_OUT, &d->flags)) {
 			__rfcomm_dlc_close(d, ETIMEDOUT);
-<<<<<<< HEAD
-=======
 	        rfcomm_dlc_put(d);
->>>>>>> origin/incrediblec-2.6.32
 			continue;
 		}
 

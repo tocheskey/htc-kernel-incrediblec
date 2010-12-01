@@ -24,11 +24,7 @@
 #include <asm/gpio.h>
 #include <asm/io.h>
 #include <linux/skbuff.h>
-<<<<<<< HEAD
-#include <linux/wifi_tiwlan.h>
-=======
 #include <linux/wlan_plat.h>
->>>>>>> origin/incrediblec-2.6.32
 
 #include "board-incrediblec.h"
 
@@ -105,10 +101,6 @@ static struct wifi_platform_data incrediblec_wifi_control = {
 	.set_reset      = incrediblec_wifi_reset,
 	.set_carddetect = incrediblec_wifi_set_carddetect,
 	.mem_prealloc   = incrediblec_wifi_mem_prealloc,
-<<<<<<< HEAD
-	.dot11n_enable  = 1,
-=======
->>>>>>> origin/incrediblec-2.6.32
 };
 
 static struct platform_device incrediblec_wifi_device = {

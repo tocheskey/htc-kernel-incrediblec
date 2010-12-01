@@ -1,10 +1,7 @@
 #ifndef IOCONTEXT_H
 #define IOCONTEXT_H
 
-<<<<<<< HEAD
-=======
 #include <linux/bitmap.h>
->>>>>>> origin/incrediblec-2.6.32
 #include <linux/radix-tree.h>
 #include <linux/rcupdate.h>
 
@@ -34,19 +31,11 @@ struct as_io_context {
 	sector_t seek_mean;
 };
 
-<<<<<<< HEAD
-struct cfq_queue;
-=======
->>>>>>> origin/incrediblec-2.6.32
 struct cfq_io_context {
 	void *key;
 	unsigned long dead_key;
 
-<<<<<<< HEAD
-	struct cfq_queue *cfqq[2];
-=======
 	void *cfqq[2];
->>>>>>> origin/incrediblec-2.6.32
 
 	struct io_context *ioc;
 
@@ -71,8 +60,6 @@ struct cfq_io_context {
 };
 
 /*
-<<<<<<< HEAD
-=======
  * Indexes into the ioprio_changed bitmap.  A bit set indicates that
  * the corresponding I/O scheduler needs to see a ioprio update.
  */
@@ -83,7 +70,6 @@ enum {
 };
 
 /*
->>>>>>> origin/incrediblec-2.6.32
  * I/O subsystem state of the associated processes.  It is refcounted
  * and kmalloc'ed. These could be shared between processes.
  */
@@ -95,11 +81,7 @@ struct io_context {
 	spinlock_t lock;
 
 	unsigned short ioprio;
-<<<<<<< HEAD
-	unsigned short ioprio_changed;
-=======
 	DECLARE_BITMAP(ioprio_changed, IOC_IOPRIO_CHANGED_BITS);
->>>>>>> origin/incrediblec-2.6.32
 
 	/*
 	 * For request batching
@@ -110,11 +92,8 @@ struct io_context {
 	struct as_io_context *aic;
 	struct radix_tree_root radix_root;
 	struct hlist_head cic_list;
-<<<<<<< HEAD
-=======
 	struct radix_tree_root bfq_radix_root;
 	struct hlist_head bfq_cic_list;
->>>>>>> origin/incrediblec-2.6.32
 	void *ioc_data;
 };
 

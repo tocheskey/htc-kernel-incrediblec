@@ -970,11 +970,7 @@ static void sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
 	u16 clk;
 	unsigned long timeout;
 
-<<<<<<< HEAD
-	if (clock == host->clock)
-=======
 	if (clock && clock == host->clock)
->>>>>>> origin/incrediblec-2.6.32
 		return;
 
 	if (host->ops->set_clock) {

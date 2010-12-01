@@ -1,11 +1,7 @@
 /*
  * YAFFS: Yet Another Flash File System. A NAND-flash specific file system.
  *
-<<<<<<< HEAD
- * Copyright (C) 2002-2007 Aleph One Ltd.
-=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
->>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>
@@ -15,12 +11,6 @@
  * published by the Free Software Foundation.
  */
 
-<<<<<<< HEAD
-const char *yaffs_nand_c_version =
-	"$Id$";
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 #include "yaffs_nand.h"
 #include "yaffs_tagscompat.h"
 #include "yaffs_tagsvalidity.h"
@@ -42,13 +32,8 @@ int yaffs_ReadChunkWithTagsFromNAND(yaffs_Device *dev, int chunkInNAND,
 	if (!tags)
 		tags = &localTags;
 
-<<<<<<< HEAD
-	if (dev->readChunkWithTagsFromNAND)
-		result = dev->readChunkWithTagsFromNAND(dev, realignedChunkInNAND, buffer,
-=======
 	if (dev->param.readChunkWithTagsFromNAND)
 		result = dev->param.readChunkWithTagsFromNAND(dev, realignedChunkInNAND, buffer,
->>>>>>> origin/incrediblec-2.6.32
 						      tags);
 	else
 		result = yaffs_TagsCompatabilityReadChunkWithTagsFromNAND(dev,
@@ -58,12 +43,8 @@ int yaffs_ReadChunkWithTagsFromNAND(yaffs_Device *dev, int chunkInNAND,
 	if (tags &&
 	   tags->eccResult > YAFFS_ECC_RESULT_NO_ERROR) {
 
-<<<<<<< HEAD
-		yaffs_BlockInfo *bi = yaffs_GetBlockInfo(dev, chunkInNAND/dev->nChunksPerBlock);
-=======
 		yaffs_BlockInfo *bi;
 		bi = yaffs_GetBlockInfo(dev, chunkInNAND/dev->param.nChunksPerBlock);
->>>>>>> origin/incrediblec-2.6.32
 		yaffs_HandleChunkError(dev, bi);
 	}
 
@@ -97,13 +78,8 @@ int yaffs_WriteChunkWithTagsToNAND(yaffs_Device *dev,
 		YBUG();
 	}
 
-<<<<<<< HEAD
-	if (dev->writeChunkWithTagsToNAND)
-		return dev->writeChunkWithTagsToNAND(dev, chunkInNAND, buffer,
-=======
 	if (dev->param.writeChunkWithTagsToNAND)
 		return dev->param.writeChunkWithTagsToNAND(dev, chunkInNAND, buffer,
->>>>>>> origin/incrediblec-2.6.32
 						     tags);
 	else
 		return yaffs_TagsCompatabilityWriteChunkWithTagsToNAND(dev,
@@ -117,13 +93,8 @@ int yaffs_MarkBlockBad(yaffs_Device *dev, int blockNo)
 	blockNo -= dev->blockOffset;
 
 
-<<<<<<< HEAD
-	if (dev->markNANDBlockBad)
-		return dev->markNANDBlockBad(dev, blockNo);
-=======
 	if (dev->param.markNANDBlockBad)
 		return dev->param.markNANDBlockBad(dev, blockNo);
->>>>>>> origin/incrediblec-2.6.32
 	else
 		return yaffs_TagsCompatabilityMarkNANDBlockBad(dev, blockNo);
 }
@@ -135,13 +106,8 @@ int yaffs_QueryInitialBlockState(yaffs_Device *dev,
 {
 	blockNo -= dev->blockOffset;
 
-<<<<<<< HEAD
-	if (dev->queryNANDBlock)
-		return dev->queryNANDBlock(dev, blockNo, state, sequenceNumber);
-=======
 	if (dev->param.queryNANDBlock)
 		return dev->param.queryNANDBlock(dev, blockNo, state, sequenceNumber);
->>>>>>> origin/incrediblec-2.6.32
 	else
 		return yaffs_TagsCompatabilityQueryNANDBlock(dev, blockNo,
 							     state,
@@ -158,24 +124,16 @@ int yaffs_EraseBlockInNAND(struct yaffs_DeviceStruct *dev,
 
 	dev->nBlockErasures++;
 
-<<<<<<< HEAD
-	result = dev->eraseBlockInNAND(dev, blockInNAND);
-=======
 	result = dev->param.eraseBlockInNAND(dev, blockInNAND);
->>>>>>> origin/incrediblec-2.6.32
 
 	return result;
 }
 
 int yaffs_InitialiseNAND(struct yaffs_DeviceStruct *dev)
 {
-<<<<<<< HEAD
-	return dev->initialiseNAND(dev);
-=======
 	if(dev->param.initialiseNAND)
 		return dev->param.initialiseNAND(dev);
 	return YAFFS_OK;
->>>>>>> origin/incrediblec-2.6.32
 }
 
 

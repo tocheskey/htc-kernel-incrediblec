@@ -996,10 +996,7 @@ int mdp_probe(struct platform_device *pdev)
 
 	mdp->clk = clk_get(&pdev->dev, "mdp_clk");
 	if (IS_ERR(mdp->clk)) {
-<<<<<<< HEAD
-=======
 		kfree(mdp);
->>>>>>> origin/incrediblec-2.6.32
 		printk(KERN_INFO "mdp: failed to get mdp clk");
 		ret = PTR_ERR(mdp->clk);
 		goto error_get_mdp_clk;

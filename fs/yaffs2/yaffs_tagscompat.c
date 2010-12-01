@@ -1,11 +1,7 @@
 /*
  * YAFFS: Yet Another Flash File System. A NAND-flash specific file system.
  *
-<<<<<<< HEAD
- * Copyright (C) 2002-2007 Aleph One Ltd.
-=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
->>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>
@@ -19,10 +15,7 @@
 #include "yaffs_tagscompat.h"
 #include "yaffs_ecc.h"
 #include "yaffs_getblockinfo.h"
-<<<<<<< HEAD
-=======
 #include "yaffs_trace.h"
->>>>>>> origin/incrediblec-2.6.32
 
 static void yaffs_HandleReadDataError(yaffs_Device *dev, int chunkInNAND);
 #ifdef NOTYET
@@ -171,22 +164,14 @@ static int yaffs_WriteChunkToNAND(struct yaffs_DeviceStruct *dev,
 				int chunkInNAND, const __u8 *data,
 				yaffs_Spare *spare)
 {
-<<<<<<< HEAD
-	if (chunkInNAND < dev->startBlock * dev->nChunksPerBlock) {
-=======
 	if (chunkInNAND < dev->param.startBlock * dev->param.nChunksPerBlock) {
->>>>>>> origin/incrediblec-2.6.32
 		T(YAFFS_TRACE_ERROR,
 		  (TSTR("**>> yaffs chunk %d is not valid" TENDSTR),
 		   chunkInNAND));
 		return YAFFS_FAIL;
 	}
 
-<<<<<<< HEAD
-	return dev->writeChunkToNAND(dev, chunkInNAND, data, spare);
-=======
 	return dev->param.writeChunkToNAND(dev, chunkInNAND, data, spare);
->>>>>>> origin/incrediblec-2.6.32
 }
 
 static int yaffs_ReadChunkFromNAND(struct yaffs_DeviceStruct *dev,
@@ -205,13 +190,8 @@ static int yaffs_ReadChunkFromNAND(struct yaffs_DeviceStruct *dev,
 		spare = &localSpare;
 	}
 
-<<<<<<< HEAD
-	if (!dev->useNANDECC) {
-		retVal = dev->readChunkFromNAND(dev, chunkInNAND, data, spare);
-=======
 	if (!dev->param.useNANDECC) {
 		retVal = dev->param.readChunkFromNAND(dev, chunkInNAND, data, spare);
->>>>>>> origin/incrediblec-2.6.32
 		if (data && doErrorCorrection) {
 			/* Do ECC correction */
 			/* Todo handle any errors */
@@ -272,11 +252,7 @@ static int yaffs_ReadChunkFromNAND(struct yaffs_DeviceStruct *dev,
 
 		memset(&nspare, 0, sizeof(nspare));
 
-<<<<<<< HEAD
-		retVal = dev->readChunkFromNAND(dev, chunkInNAND, data,
-=======
 		retVal = dev->param.readChunkFromNAND(dev, chunkInNAND, data,
->>>>>>> origin/incrediblec-2.6.32
 					(yaffs_Spare *) &nspare);
 		memcpy(spare, &nspare, sizeof(yaffs_Spare));
 		if (data && doErrorCorrection) {
@@ -329,17 +305,10 @@ static int yaffs_CheckChunkErased(struct yaffs_DeviceStruct *dev,
 	static __u8 cmpbuf[YAFFS_BYTES_PER_CHUNK];
 	static __u8 data[YAFFS_BYTES_PER_CHUNK];
 	/* Might as well always allocate the larger size for */
-<<<<<<< HEAD
-	/* dev->useNANDECC == true; */
-	static __u8 spare[sizeof(struct yaffs_NANDSpare)];
-
-	dev->readChunkFromNAND(dev, chunkInNAND, data, (yaffs_Spare *) spare);
-=======
 	/* dev->param.useNANDECC == true; */
 	static __u8 spare[sizeof(struct yaffs_NANDSpare)];
 
 	dev->param.readChunkFromNAND(dev, chunkInNAND, data, (yaffs_Spare *) spare);
->>>>>>> origin/incrediblec-2.6.32
 
 	if (!init) {
 		memset(cmpbuf, 0xff, YAFFS_BYTES_PER_CHUNK);
@@ -362,11 +331,7 @@ static int yaffs_CheckChunkErased(struct yaffs_DeviceStruct *dev,
 
 static void yaffs_HandleReadDataError(yaffs_Device *dev, int chunkInNAND)
 {
-<<<<<<< HEAD
-	int blockInNAND = chunkInNAND / dev->nChunksPerBlock;
-=======
 	int blockInNAND = chunkInNAND / dev->param.nChunksPerBlock;
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Mark the block for retirement */
 	yaffs_GetBlockInfo(dev, blockInNAND + dev->blockOffset)->needsRetiring = 1;
@@ -398,11 +363,7 @@ static void yaffs_HandleUpdateChunk(yaffs_Device *dev, int chunkInNAND,
 
 static void yaffs_HandleWriteChunkError(yaffs_Device *dev, int chunkInNAND)
 {
-<<<<<<< HEAD
-	int blockInNAND = chunkInNAND / dev->nChunksPerBlock;
-=======
 	int blockInNAND = chunkInNAND / dev->param.nChunksPerBlock;
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Mark the block for retirement */
 	yaffs_GetBlockInfo(dev, blockInNAND)->needsRetiring = 1;
@@ -461,11 +422,7 @@ int yaffs_TagsCompatabilityWriteChunkWithTagsToNAND(yaffs_Device *dev,
 
 		tags.serialNumber = eTags->serialNumber;
 
-<<<<<<< HEAD
-		if (!dev->useNANDECC && data)
-=======
 		if (!dev->param.useNANDECC && data)
->>>>>>> origin/incrediblec-2.6.32
 			yaffs_CalcECC(data, &spare);
 
 		yaffs_LoadTagsIntoSpare(&spare, &tags);
@@ -539,15 +496,9 @@ int yaffs_TagsCompatabilityMarkNANDBlockBad(struct yaffs_DeviceStruct *dev,
 
 	spare.blockStatus = 'Y';
 
-<<<<<<< HEAD
-	yaffs_WriteChunkToNAND(dev, blockInNAND * dev->nChunksPerBlock, NULL,
-			       &spare);
-	yaffs_WriteChunkToNAND(dev, blockInNAND * dev->nChunksPerBlock + 1,
-=======
 	yaffs_WriteChunkToNAND(dev, blockInNAND * dev->param.nChunksPerBlock, NULL,
 			       &spare);
 	yaffs_WriteChunkToNAND(dev, blockInNAND * dev->param.nChunksPerBlock + 1,
->>>>>>> origin/incrediblec-2.6.32
 			       NULL, &spare);
 
 	return YAFFS_OK;
@@ -572,15 +523,9 @@ int yaffs_TagsCompatabilityQueryNANDBlock(struct yaffs_DeviceStruct *dev,
 
 	*sequenceNumber = 0;
 
-<<<<<<< HEAD
-	yaffs_ReadChunkFromNAND(dev, blockNo * dev->nChunksPerBlock, NULL,
-				&spare0, &dummy, 1);
-	yaffs_ReadChunkFromNAND(dev, blockNo * dev->nChunksPerBlock + 1, NULL,
-=======
 	yaffs_ReadChunkFromNAND(dev, blockNo * dev->param.nChunksPerBlock, NULL,
 				&spare0, &dummy, 1);
 	yaffs_ReadChunkFromNAND(dev, blockNo * dev->param.nChunksPerBlock + 1, NULL,
->>>>>>> origin/incrediblec-2.6.32
 				&spare1, &dummy, 1);
 
 	if (yaffs_CountBits(spare0.blockStatus & spare1.blockStatus) < 7)

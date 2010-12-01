@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: wl_iw.h,v 1.5.34.1.6.16 2010/04/19 21:32:10 Exp $
-=======
  * $Id: wl_iw.h,v 1.5.34.1.6.35 2010/08/20 02:42:33 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 
 
@@ -38,8 +34,6 @@
 #include <proto/ethernet.h>
 #include <wlioctl.h>
 
-<<<<<<< HEAD
-=======
 #define WL_SCAN_PARAMS_SSID_MAX 	10
 #define GET_SSID			"SSID="
 #define GET_CHANNEL			"CH="
@@ -66,7 +60,6 @@
 typedef struct wl_iw_extra_params {
 	int 	target_channel;
 } wl_iw_extra_params_t;
->>>>>>> origin/incrediblec-2.6.32
 
 #define	WL_IW_RSSI_MINVAL	-200
 #define	WL_IW_RSSI_NO_SIGNAL	-91
@@ -94,11 +87,7 @@ typedef struct wl_iw_extra_params {
 #define AP_LPB_CMD              (SIOCIWFIRSTPRIV+23)
 #define WL_AP_STOP              (SIOCIWFIRSTPRIV+25)
 #define WL_FW_RELOAD            (SIOCIWFIRSTPRIV+27)
-<<<<<<< HEAD
-#define WL_AP_SPARE2            (SIOCIWFIRSTPRIV+29)
-=======
 #define WL_COMBO_SCAN           (SIOCIWFIRSTPRIV+29)
->>>>>>> origin/incrediblec-2.6.32
 #define WL_AP_SPARE3            (SIOCIWFIRSTPRIV+31)
 #define G_SCAN_RESULTS		(8*1024)
 #define WE_ADD_EVENT_FIX	0x80
@@ -132,11 +121,7 @@ typedef struct wl_iw {
 #define WLC_IW_BSS_INFO_MAXLEN 				\
 	(WLC_IW_SS_CACHE_MAXLEN - WLC_IW_SS_CACHE_CTRL_FIELD_MAXLEN)
 
-<<<<<<< HEAD
-typedef struct wl_iw_ss_cache{
-=======
 typedef struct wl_iw_ss_cache {
->>>>>>> origin/incrediblec-2.6.32
 	uint32 buflen;
 	uint32 version;
 	uint32 count;
@@ -207,14 +192,11 @@ extern int net_os_wake_lock(struct net_device *dev);
 extern int net_os_wake_unlock(struct net_device *dev);
 extern int net_os_wake_lock_timeout(struct net_device *dev);
 extern int net_os_wake_lock_timeout_enable(struct net_device *dev);
-<<<<<<< HEAD
-=======
 extern int net_os_set_suspend_disable(struct net_device *dev, int val);
 extern int net_os_set_suspend(struct net_device *dev, int val);
 extern int net_os_set_dtim_skip(struct net_device *dev, int val);
 extern int net_os_set_packet_filter(struct net_device *dev, int val);
 extern int net_os_send_hang_message(struct net_device *dev);
->>>>>>> origin/incrediblec-2.6.32
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)
 #define IWE_STREAM_ADD_EVENT(info, stream, ends, iwe, extra) \
@@ -232,9 +214,6 @@ extern int net_os_send_hang_message(struct net_device *dev);
 	iwe_stream_add_point(stream, ends, iwe, extra)
 #endif
 
-<<<<<<< HEAD
-#endif
-=======
 extern int dhd_pno_enable(dhd_pub_t *dhd, int pfn_enabled);
 extern int dhd_pno_clean(dhd_pub_t *dhd);
 extern int dhd_pno_set(dhd_pub_t *dhd, wlc_ssid_t* ssids_local, int nssid, uchar  scan_fr);
@@ -297,4 +276,3 @@ extern int wl_iw_parse_channel_list(char** list_str, uint16* channel_list, int c
 #endif 
 
 #endif 
->>>>>>> origin/incrediblec-2.6.32

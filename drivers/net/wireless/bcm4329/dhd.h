@@ -24,11 +24,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: dhd.h,v 1.32.4.7.2.4.14.29 2010/02/23 06:58:21 Exp $
-=======
  * $Id: dhd.h,v 1.32.4.7.2.4.14.49 2010/08/20 17:32:48 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 
 /****************
@@ -63,14 +59,11 @@
 
 #include <wlioctl.h>
 
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 #ifndef DHD_DEBUG_TRAP
 #define DHD_DEBUG_TRAP
 #endif
 #endif
->>>>>>> origin/incrediblec-2.6.32
 
 /* Forward decls */
 struct dhd_bus;
@@ -157,16 +150,6 @@ typedef struct dhd_pub {
 	/* Last error from dongle */
 	int dongle_error;
 
-<<<<<<< HEAD
-	uint8 country_code[WLC_CNTRY_BUF_SZ];
-} dhd_pub_t;
-
-	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP)
-
-	#define DHD_PM_RESUME_WAIT_INIT(a) DECLARE_WAIT_QUEUE_HEAD(a);
-	#define _DHD_PM_RESUME_WAIT(a, b) do {\
-			int retry = 0; \
-=======
 	/* Suspend disable flag and "in suspend" flag */
 	int suspend_disable_flag; /* "1" to disable all extra powersaving during suspend */
 	int in_suspend;			/* flag set to 1 when early suspend called */
@@ -190,32 +173,17 @@ typedef struct dhd_pub {
 	#define _DHD_PM_RESUME_WAIT(a, b) do { \
 			int retry = 0; \
 			smp_mb(); \
->>>>>>> origin/incrediblec-2.6.32
 			while (dhd_mmc_suspend && retry++ != b) { \
 				wait_event_interruptible_timeout(a, FALSE, HZ/100); \
 			} \
 		} 	while (0)
-<<<<<<< HEAD
-	#define DHD_PM_RESUME_WAIT(a) 			_DHD_PM_RESUME_WAIT(a, 30)
-=======
 	#define DHD_PM_RESUME_WAIT(a) 		_DHD_PM_RESUME_WAIT(a, 30)
->>>>>>> origin/incrediblec-2.6.32
 	#define DHD_PM_RESUME_WAIT_FOREVER(a) 	_DHD_PM_RESUME_WAIT(a, ~0)
 	#define DHD_PM_RESUME_RETURN_ERROR(a)	do { if (dhd_mmc_suspend) return a; } while (0)
 	#define DHD_PM_RESUME_RETURN		do { if (dhd_mmc_suspend) return; } while (0)
 
 	#define DHD_SPINWAIT_SLEEP_INIT(a) DECLARE_WAIT_QUEUE_HEAD(a);
 	#define SPINWAIT_SLEEP(a, exp, us) do { \
-<<<<<<< HEAD
-		uint countdown = (us) + 9; \
-		while ((exp) && (countdown >= 10)) { \
-			wait_event_interruptible_timeout(a, FALSE, HZ/100); \
-			countdown -= 10; \
-		} \
-	} while (0)
-
-	#else
-=======
 		uint countdown = (us) + 9999; \
 		while ((exp) && (countdown >= 10000)) { \
 			wait_event_interruptible_timeout(a, FALSE, HZ/100); \
@@ -224,7 +192,6 @@ typedef struct dhd_pub {
 	} while (0)
 
 #else
->>>>>>> origin/incrediblec-2.6.32
 
 	#define DHD_PM_RESUME_WAIT_INIT(a)
 	#define DHD_PM_RESUME_WAIT(a)
@@ -241,12 +208,8 @@ typedef struct dhd_pub {
 		} \
 	} while (0)
 
-<<<<<<< HEAD
-	#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP) */
-=======
 #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP) */
 
->>>>>>> origin/incrediblec-2.6.32
 #define DHD_IF_VIF	0x01	/* Virtual IF (Hidden from user) */
 
 /* Wakelock Functions */
@@ -320,11 +283,6 @@ extern void dhd_os_sdlock_rxq(dhd_pub_t * pub);
 extern void dhd_os_sdunlock_rxq(dhd_pub_t * pub);
 extern void dhd_os_sdlock_sndup_rxq(dhd_pub_t * pub);
 extern void dhd_customer_gpio_wlan_ctrl(int onoff);
-<<<<<<< HEAD
-extern void dhd_os_sdunlock_sndup_rxq(dhd_pub_t * pub);
-extern void dhd_os_sdlock_eventq(dhd_pub_t * pub);
-extern void dhd_os_sdunlock_eventq(dhd_pub_t * pub);
-=======
 extern int dhd_custom_get_mac_address(unsigned char *buf);
 extern void dhd_os_sdunlock_sndup_rxq(dhd_pub_t * pub);
 extern void dhd_os_sdlock_eventq(dhd_pub_t * pub);
@@ -332,7 +290,6 @@ extern void dhd_os_sdunlock_eventq(dhd_pub_t * pub);
 #ifdef DHD_DEBUG
 extern int write_to_file(dhd_pub_t *dhd, uint8 *buf, int size);
 #endif /* DHD_DEBUG */
->>>>>>> origin/incrediblec-2.6.32
 #if defined(OOB_INTR_ONLY)
 extern int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr);
 #endif /* defined(OOB_INTR_ONLY) */
@@ -379,10 +336,7 @@ extern int dhd_bus_devreset(dhd_pub_t *dhdp, uint8 flag);
 extern uint dhd_bus_status(dhd_pub_t *dhdp);
 extern int  dhd_bus_start(dhd_pub_t *dhdp);
 
-<<<<<<< HEAD
-=======
 extern void print_buf(void *pbuf, int len, int bytes_per_line);
->>>>>>> origin/incrediblec-2.6.32
 
 
 typedef enum cust_gpio_modes {
@@ -392,10 +346,7 @@ typedef enum cust_gpio_modes {
 	WLAN_POWER_OFF
 } cust_gpio_modes_t;
 extern int wl_iw_iscan_set_scan_broadcast_prep(struct net_device *dev, uint flag);
-<<<<<<< HEAD
-=======
 extern int wl_iw_send_priv_event(struct net_device *dev, char *flag);
->>>>>>> origin/incrediblec-2.6.32
 /*
  * Insmod parameters for debug/test
  */
@@ -403,13 +354,10 @@ extern int wl_iw_send_priv_event(struct net_device *dev, char *flag);
 /* Watchdog timer interval */
 extern uint dhd_watchdog_ms;
 
-<<<<<<< HEAD
-=======
 #if defined(DHD_DEBUG)
 /* Console output poll interval */
 extern uint dhd_console_ms;
 #endif /* defined(DHD_DEBUG) */
->>>>>>> origin/incrediblec-2.6.32
 
 /* Use interrupts */
 extern uint dhd_intr;
@@ -417,8 +365,6 @@ extern uint dhd_intr;
 /* Use polling */
 extern uint dhd_poll;
 
-<<<<<<< HEAD
-=======
 /* ARP offload agent mode */
 extern uint dhd_arp_mode;
 
@@ -440,7 +386,6 @@ extern uint dhd_roam;
 /* Roaming mode control */
 extern uint dhd_radio_up;
 
->>>>>>> origin/incrediblec-2.6.32
 /* Initial idletime ticks (may be -1 for immediate idle, 0 for no idle) */
 extern int dhd_idletime;
 #define DHD_IDLETIME_TICKS 1
@@ -471,12 +416,6 @@ extern char nv_path[MOD_PARAM_PATHLEN];
 #define DHD_DEL_IF	-0xe
 #define DHD_BAD_IF	-0xf
 
-<<<<<<< HEAD
-#ifdef APSTA_PINGTEST
-#define MAX_GUEST 8
-#endif
-=======
->>>>>>> origin/incrediblec-2.6.32
 
 extern void dhd_wait_for_event(dhd_pub_t *dhd, bool *lockvar);
 extern void dhd_wait_event_wakeup(dhd_pub_t*dhd);

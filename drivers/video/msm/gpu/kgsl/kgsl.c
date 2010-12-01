@@ -117,11 +117,8 @@ static void kgsl_clk_enable(void)
 {
 	clk_set_rate(kgsl_driver.ebi1_clk, 128000000);
 	clk_enable(kgsl_driver.imem_clk);
-<<<<<<< HEAD
-=======
 	if (kgsl_driver.grp_pclk)
 		clk_enable(kgsl_driver.grp_pclk);
->>>>>>> origin/incrediblec-2.6.32
 	clk_enable(kgsl_driver.grp_clk);
 #ifdef CONFIG_ARCH_MSM7227
 	clk_enable(kgsl_driver.grp_pclk);
@@ -134,11 +131,8 @@ static void kgsl_clk_disable(void)
 	clk_disable(kgsl_driver.grp_pclk);
 #endif
 	clk_disable(kgsl_driver.grp_clk);
-<<<<<<< HEAD
-=======
 	if (kgsl_driver.grp_pclk)
 		clk_disable(kgsl_driver.grp_pclk);
->>>>>>> origin/incrediblec-2.6.32
 	clk_disable(kgsl_driver.imem_clk);
 	clk_set_rate(kgsl_driver.ebi1_clk, 0);
 }
@@ -729,11 +723,7 @@ static int kgsl_ioctl_sharedmem_from_vmalloc(struct kgsl_file_private *private,
 		 * overwrite this memory */
 		dmac_flush_range(vmalloc_area, vmalloc_area + len);
 		KGSL_MEM_INFO("Caching for memory allocation turned off\n");
-<<<<<<< HEAD
-		vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
-=======
 		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
->>>>>>> origin/incrediblec-2.6.32
 	} else {
 		KGSL_MEM_INFO("Caching for memory allocation turned on\n");
 	}
@@ -1180,8 +1170,6 @@ static int __devinit kgsl_platform_probe(struct platform_device *pdev)
 	}
 	kgsl_driver.grp_clk = clk;
 
-<<<<<<< HEAD
-=======
 	clk = clk_get(&pdev->dev, "grp_pclk");
 	if (IS_ERR(clk)) {
 		KGSL_DRV_ERR("no grp_pclk, continuing\n");
@@ -1189,7 +1177,6 @@ static int __devinit kgsl_platform_probe(struct platform_device *pdev)
 	}
 	kgsl_driver.grp_pclk = clk;
 
->>>>>>> origin/incrediblec-2.6.32
 	clk = clk_get(&pdev->dev, "imem_clk");
 	if (IS_ERR(clk)) {
 		result = PTR_ERR(clk);

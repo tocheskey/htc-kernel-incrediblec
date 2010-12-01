@@ -1083,8 +1083,6 @@ static int too_many_isolated(struct zone *zone, int file,
 }
 
 /*
-<<<<<<< HEAD
-=======
  * Returns true if the caller should wait to clean dirty/writeback pages.
  *
  * If we are direct reclaiming for contiguous pages and we do not reclaim
@@ -1095,8 +1093,8 @@ static int too_many_isolated(struct zone *zone, int file,
 static inline bool should_reclaim_stall(unsigned long nr_taken,
 					unsigned long nr_freed,
 					int priority,
-					struct scan_control *sc,
-					int lumpy_reclaim)
+					int lumpy_reclaim,
+					struct scan_control *sc)
 {
 	int lumpy_stall_priority;
 
@@ -1127,7 +1125,6 @@ static inline bool should_reclaim_stall(unsigned long nr_taken,
 }
 
 /*
->>>>>>> origin/incrediblec-2.6.32
  * shrink_inactive_list() is a helper for shrink_zone().  It returns the number
  * of reclaimed pages
  */
@@ -1221,21 +1218,11 @@ static unsigned long shrink_inactive_list(unsigned long max_scan,
 		nr_scanned += nr_scan;
 		nr_freed = shrink_page_list(&page_list, sc, PAGEOUT_IO_ASYNC);
 
-<<<<<<< HEAD
-		/*
-		 * If we are direct reclaiming for contiguous pages and we do
-		 * not reclaim everything in the list, try again and wait
-		 * for IO to complete. This will stall high-order allocations
-		 * but that should be acceptable to the caller
-		 */
-		if (nr_freed < nr_taken && !current_is_kswapd() &&
-		    lumpy_reclaim) {
+		/* Check if we should syncronously wait for writeback */
+		if (should_reclaim_stall(nr_taken, nr_freed, priority,
+					lumpy_reclaim, sc)) {
 			congestion_wait(BLK_RW_ASYNC, HZ/10);
 
-=======
-		/* Check if we should synchronously wait for writeback */
-		if (should_reclaim_stall(nr_taken, nr_reclaimed, priority, sc, lumpy_reclaim)) {
->>>>>>> origin/incrediblec-2.6.32
 			/*
 			 * The attempt at page out may have made some
 			 * of the pages active, mark them inactive again.

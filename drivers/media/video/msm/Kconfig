@@ -17,8 +17,6 @@ config 720P_CAMERA
         help
           720P video support
 
-<<<<<<< HEAD
-=======
 config MSM_CAMERA_V4L2
 	bool "Video For Linux interface to MSM camera"
 	depends on MSM_CAMERA && VIDEO_V4L2 && EXPERIMENTAL
@@ -28,7 +26,6 @@ config MSM_CAMERA_V4L2
 	  Not everything works through this interface and it has not
 	  been thoroughly tested.
 
->>>>>>> origin/incrediblec-2.6.32
 config MSM_CAMERA_DEBUG
 	bool "Qualcomm MSM camera debugging with printk"
 	depends on MSM_CAMERA

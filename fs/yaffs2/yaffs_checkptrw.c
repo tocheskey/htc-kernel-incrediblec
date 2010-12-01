@@ -1,11 +1,7 @@
 /*
  * YAFFS: Yet Another Flash File System. A NAND-flash specific file system.
  *
-<<<<<<< HEAD
- * Copyright (C) 2002-2007 Aleph One Ltd.
-=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
->>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>
@@ -15,25 +11,12 @@
  * published by the Free Software Foundation.
  */
 
-<<<<<<< HEAD
-const char *yaffs_checkptrw_c_version =
-	"$Id$";
-
-
-#include "yaffs_checkptrw.h"
-#include "yaffs_getblockinfo.h"
-
-static int yaffs_CheckpointSpaceOk(yaffs_Device *dev)
-{
-	int blocksAvailable = dev->nErasedBlocks - dev->nReservedBlocks;
-=======
 #include "yaffs_checkptrw.h"
 #include "yaffs_getblockinfo.h"
 
 static int yaffs2_CheckpointSpaceOk(yaffs_Device *dev)
 {
 	int blocksAvailable = dev->nErasedBlocks - dev->param.nReservedBlocks;
->>>>>>> origin/incrediblec-2.6.32
 
 	T(YAFFS_TRACE_CHECKPOINT,
 		(TSTR("checkpt blocks available = %d" TENDSTR),
@@ -43,19 +26,11 @@ static int yaffs2_CheckpointSpaceOk(yaffs_Device *dev)
 }
 
 
-<<<<<<< HEAD
-static int yaffs_CheckpointErase(yaffs_Device *dev)
-{
-	int i;
-
-	if (!dev->eraseBlockInNAND)
-=======
 static int yaffs2_CheckpointErase(yaffs_Device *dev)
 {
 	int i;
 
 	if (!dev->param.eraseBlockInNAND)
->>>>>>> origin/incrediblec-2.6.32
 		return 0;
 	T(YAFFS_TRACE_CHECKPOINT, (TSTR("checking blocks %d to %d"TENDSTR),
 		dev->internalStartBlock, dev->internalEndBlock));
@@ -67,21 +42,12 @@ static int yaffs2_CheckpointErase(yaffs_Device *dev)
 
 			dev->nBlockErasures++;
 
-<<<<<<< HEAD
-			if (dev->eraseBlockInNAND(dev, i - dev->blockOffset /* realign */)) {
-				bi->blockState = YAFFS_BLOCK_STATE_EMPTY;
-				dev->nErasedBlocks++;
-				dev->nFreeChunks += dev->nChunksPerBlock;
-			} else {
-				dev->markNANDBlockBad(dev, i);
-=======
 			if (dev->param.eraseBlockInNAND(dev, i - dev->blockOffset /* realign */)) {
 				bi->blockState = YAFFS_BLOCK_STATE_EMPTY;
 				dev->nErasedBlocks++;
 				dev->nFreeChunks += dev->param.nChunksPerBlock;
 			} else {
 				dev->param.markNANDBlockBad(dev, i);
->>>>>>> origin/incrediblec-2.6.32
 				bi->blockState = YAFFS_BLOCK_STATE_DEAD;
 			}
 		}
@@ -93,15 +59,6 @@ static int yaffs2_CheckpointErase(yaffs_Device *dev)
 }
 
 
-<<<<<<< HEAD
-static void yaffs_CheckpointFindNextErasedBlock(yaffs_Device *dev)
-{
-	int  i;
-	int blocksAvailable = dev->nErasedBlocks - dev->nReservedBlocks;
-	T(YAFFS_TRACE_CHECKPOINT,
-		(TSTR("allocating checkpt block: erased %d reserved %d avail %d next %d "TENDSTR),
-		dev->nErasedBlocks, dev->nReservedBlocks, blocksAvailable, dev->checkpointNextBlock));
-=======
 static void yaffs2_CheckpointFindNextErasedBlock(yaffs_Device *dev)
 {
 	int  i;
@@ -109,7 +66,6 @@ static void yaffs2_CheckpointFindNextErasedBlock(yaffs_Device *dev)
 	T(YAFFS_TRACE_CHECKPOINT,
 		(TSTR("allocating checkpt block: erased %d reserved %d avail %d next %d "TENDSTR),
 		dev->nErasedBlocks, dev->param.nReservedBlocks, blocksAvailable, dev->checkpointNextBlock));
->>>>>>> origin/incrediblec-2.6.32
 
 	if (dev->checkpointNextBlock >= 0 &&
 			dev->checkpointNextBlock <= dev->internalEndBlock &&
@@ -131,11 +87,7 @@ static void yaffs2_CheckpointFindNextErasedBlock(yaffs_Device *dev)
 	dev->checkpointCurrentBlock = -1;
 }
 
-<<<<<<< HEAD
-static void yaffs_CheckpointFindNextCheckpointBlock(yaffs_Device *dev)
-=======
 static void yaffs2_CheckpointFindNextCheckpointBlock(yaffs_Device *dev)
->>>>>>> origin/incrediblec-2.6.32
 {
 	int  i;
 	yaffs_ExtendedTags tags;
@@ -145,17 +97,10 @@ static void yaffs2_CheckpointFindNextCheckpointBlock(yaffs_Device *dev)
 
 	if (dev->blocksInCheckpoint < dev->checkpointMaxBlocks)
 		for (i = dev->checkpointNextBlock; i <= dev->internalEndBlock; i++) {
-<<<<<<< HEAD
-			int chunk = i * dev->nChunksPerBlock;
-			int realignedChunk = chunk - dev->chunkOffset;
-
-			dev->readChunkWithTagsFromNAND(dev, realignedChunk,
-=======
 			int chunk = i * dev->param.nChunksPerBlock;
 			int realignedChunk = chunk - dev->chunkOffset;
 
 			dev->param.readChunkWithTagsFromNAND(dev, realignedChunk,
->>>>>>> origin/incrediblec-2.6.32
 					NULL, &tags);
 			T(YAFFS_TRACE_CHECKPOINT, (TSTR("find next checkpt block: search: block %d oid %d seq %d eccr %d" TENDSTR),
 				i, tags.objectId, tags.sequenceNumber, tags.eccResult));
@@ -178,30 +123,13 @@ static void yaffs2_CheckpointFindNextCheckpointBlock(yaffs_Device *dev)
 }
 
 
-<<<<<<< HEAD
-int yaffs_CheckpointOpen(yaffs_Device *dev, int forWriting)
-=======
 int yaffs2_CheckpointOpen(yaffs_Device *dev, int forWriting)
->>>>>>> origin/incrediblec-2.6.32
 {
 
 
 	dev->checkpointOpenForWrite = forWriting;
 
 	/* Got the functions we need? */
-<<<<<<< HEAD
-	if (!dev->writeChunkWithTagsToNAND ||
-			!dev->readChunkWithTagsFromNAND ||
-			!dev->eraseBlockInNAND ||
-			!dev->markNANDBlockBad)
-		return 0;
-
-	if (forWriting && !yaffs_CheckpointSpaceOk(dev))
-		return 0;
-
-	if (!dev->checkpointBuffer)
-		dev->checkpointBuffer = YMALLOC_DMA(dev->totalBytesPerChunk);
-=======
 	if (!dev->param.writeChunkWithTagsToNAND ||
 		!dev->param.readChunkWithTagsFromNAND ||
 		!dev->param.eraseBlockInNAND ||
@@ -213,7 +141,6 @@ int yaffs2_CheckpointOpen(yaffs_Device *dev, int forWriting)
 
 	if (!dev->checkpointBuffer)
 		dev->checkpointBuffer = YMALLOC_DMA(dev->param.totalBytesPerChunk);
->>>>>>> origin/incrediblec-2.6.32
 	if (!dev->checkpointBuffer)
 		return 0;
 
@@ -230,11 +157,7 @@ int yaffs2_CheckpointOpen(yaffs_Device *dev, int forWriting)
 	if (forWriting) {
 		memset(dev->checkpointBuffer, 0, dev->nDataBytesPerChunk);
 		dev->checkpointByteOffset = 0;
-<<<<<<< HEAD
-		return yaffs_CheckpointErase(dev);
-=======
 		return yaffs2_CheckpointErase(dev);
->>>>>>> origin/incrediblec-2.6.32
 	} else {
 		int i;
 		/* Set to a value that will kick off a read */
@@ -254,11 +177,7 @@ int yaffs2_CheckpointOpen(yaffs_Device *dev, int forWriting)
 	return 1;
 }
 
-<<<<<<< HEAD
-int yaffs_GetCheckpointSum(yaffs_Device *dev, __u32 *sum)
-=======
 int yaffs2_GetCheckpointSum(yaffs_Device *dev, __u32 *sum)
->>>>>>> origin/incrediblec-2.6.32
 {
 	__u32 compositeSum;
 	compositeSum =  (dev->checkpointSum << 8) | (dev->checkpointXor & 0xFF);
@@ -266,11 +185,7 @@ int yaffs2_GetCheckpointSum(yaffs_Device *dev, __u32 *sum)
 	return 1;
 }
 
-<<<<<<< HEAD
-static int yaffs_CheckpointFlushBuffer(yaffs_Device *dev)
-=======
 static int yaffs2_CheckpointFlushBuffer(yaffs_Device *dev)
->>>>>>> origin/incrediblec-2.6.32
 {
 	int chunk;
 	int realignedChunk;
@@ -278,11 +193,7 @@ static int yaffs2_CheckpointFlushBuffer(yaffs_Device *dev)
 	yaffs_ExtendedTags tags;
 
 	if (dev->checkpointCurrentBlock < 0) {
-<<<<<<< HEAD
-		yaffs_CheckpointFindNextErasedBlock(dev);
-=======
 		yaffs2_CheckpointFindNextErasedBlock(dev);
->>>>>>> origin/incrediblec-2.6.32
 		dev->checkpointCurrentChunk = 0;
 	}
 
@@ -302,11 +213,7 @@ static int yaffs2_CheckpointFlushBuffer(yaffs_Device *dev)
 		dev->blocksInCheckpoint++;
 	}
 
-<<<<<<< HEAD
-	chunk = dev->checkpointCurrentBlock * dev->nChunksPerBlock + dev->checkpointCurrentChunk;
-=======
 	chunk = dev->checkpointCurrentBlock * dev->param.nChunksPerBlock + dev->checkpointCurrentChunk;
->>>>>>> origin/incrediblec-2.6.32
 
 
 	T(YAFFS_TRACE_CHECKPOINT, (TSTR("checkpoint wite buffer nand %d(%d:%d) objid %d chId %d" TENDSTR),
@@ -316,20 +223,12 @@ static int yaffs2_CheckpointFlushBuffer(yaffs_Device *dev)
 
 	dev->nPageWrites++;
 
-<<<<<<< HEAD
-	dev->writeChunkWithTagsToNAND(dev, realignedChunk,
-=======
 	dev->param.writeChunkWithTagsToNAND(dev, realignedChunk,
->>>>>>> origin/incrediblec-2.6.32
 			dev->checkpointBuffer, &tags);
 	dev->checkpointByteOffset = 0;
 	dev->checkpointPageSequence++;
 	dev->checkpointCurrentChunk++;
-<<<<<<< HEAD
-	if (dev->checkpointCurrentChunk >= dev->nChunksPerBlock) {
-=======
 	if (dev->checkpointCurrentChunk >= dev->param.nChunksPerBlock) {
->>>>>>> origin/incrediblec-2.6.32
 		dev->checkpointCurrentChunk = 0;
 		dev->checkpointCurrentBlock = -1;
 	}
@@ -339,11 +238,7 @@ static int yaffs2_CheckpointFlushBuffer(yaffs_Device *dev)
 }
 
 
-<<<<<<< HEAD
-int yaffs_CheckpointWrite(yaffs_Device *dev, const void *data, int nBytes)
-=======
 int yaffs2_CheckpointWrite(yaffs_Device *dev, const void *data, int nBytes)
->>>>>>> origin/incrediblec-2.6.32
 {
 	int i = 0;
 	int ok = 1;
@@ -372,21 +267,13 @@ int yaffs2_CheckpointWrite(yaffs_Device *dev, const void *data, int nBytes)
 
 		if (dev->checkpointByteOffset < 0 ||
 		   dev->checkpointByteOffset >= dev->nDataBytesPerChunk)
-<<<<<<< HEAD
-			ok = yaffs_CheckpointFlushBuffer(dev);
-=======
 			ok = yaffs2_CheckpointFlushBuffer(dev);
->>>>>>> origin/incrediblec-2.6.32
 	}
 
 	return i;
 }
 
-<<<<<<< HEAD
-int yaffs_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
-=======
 int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
->>>>>>> origin/incrediblec-2.6.32
 {
 	int i = 0;
 	int ok = 1;
@@ -411,11 +298,7 @@ int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
 			dev->checkpointByteOffset >= dev->nDataBytesPerChunk) {
 
 			if (dev->checkpointCurrentBlock < 0) {
-<<<<<<< HEAD
-				yaffs_CheckpointFindNextCheckpointBlock(dev);
-=======
 				yaffs2_CheckpointFindNextCheckpointBlock(dev);
->>>>>>> origin/incrediblec-2.6.32
 				dev->checkpointCurrentChunk = 0;
 			}
 
@@ -423,11 +306,7 @@ int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
 				ok = 0;
 			else {
 				chunk = dev->checkpointCurrentBlock *
-<<<<<<< HEAD
-					dev->nChunksPerBlock +
-=======
 					dev->param.nChunksPerBlock +
->>>>>>> origin/incrediblec-2.6.32
 					dev->checkpointCurrentChunk;
 
 				realignedChunk = chunk - dev->chunkOffset;
@@ -436,11 +315,7 @@ int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
 
 				/* read in the next chunk */
 				/* printf("read checkpoint page %d\n",dev->checkpointPage); */
-<<<<<<< HEAD
-				dev->readChunkWithTagsFromNAND(dev,
-=======
 				dev->param.readChunkWithTagsFromNAND(dev,
->>>>>>> origin/incrediblec-2.6.32
 						realignedChunk,
 						dev->checkpointBuffer,
 						&tags);
@@ -454,11 +329,7 @@ int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
 				dev->checkpointPageSequence++;
 				dev->checkpointCurrentChunk++;
 
-<<<<<<< HEAD
-				if (dev->checkpointCurrentChunk >= dev->nChunksPerBlock)
-=======
 				if (dev->checkpointCurrentChunk >= dev->param.nChunksPerBlock)
->>>>>>> origin/incrediblec-2.6.32
 					dev->checkpointCurrentBlock = -1;
 			}
 		}
@@ -477,20 +348,12 @@ int yaffs2_CheckpointRead(yaffs_Device *dev, void *data, int nBytes)
 	return 	i;
 }
 
-<<<<<<< HEAD
-int yaffs_CheckpointClose(yaffs_Device *dev)
-=======
 int yaffs2_CheckpointClose(yaffs_Device *dev)
->>>>>>> origin/incrediblec-2.6.32
 {
 
 	if (dev->checkpointOpenForWrite) {
 		if (dev->checkpointByteOffset != 0)
-<<<<<<< HEAD
-			yaffs_CheckpointFlushBuffer(dev);
-=======
 			yaffs2_CheckpointFlushBuffer(dev);
->>>>>>> origin/incrediblec-2.6.32
 	} else if(dev->checkpointBlockList){
 		int i;
 		for (i = 0; i < dev->blocksInCheckpoint && dev->checkpointBlockList[i] >= 0; i++) {
@@ -508,11 +371,7 @@ int yaffs2_CheckpointClose(yaffs_Device *dev)
 		dev->checkpointBlockList = NULL;
 	}
 
-<<<<<<< HEAD
-	dev->nFreeChunks -= dev->blocksInCheckpoint * dev->nChunksPerBlock;
-=======
 	dev->nFreeChunks -= dev->blocksInCheckpoint * dev->param.nChunksPerBlock;
->>>>>>> origin/incrediblec-2.6.32
 	dev->nErasedBlocks -= dev->blocksInCheckpoint;
 
 
@@ -528,24 +387,15 @@ int yaffs2_CheckpointClose(yaffs_Device *dev)
 		return 0;
 }
 
-<<<<<<< HEAD
-int yaffs_CheckpointInvalidateStream(yaffs_Device *dev)
-=======
 int yaffs2_CheckpointInvalidateStream(yaffs_Device *dev)
->>>>>>> origin/incrediblec-2.6.32
 {
 	/* Erase the checkpoint data */
 
 	T(YAFFS_TRACE_CHECKPOINT, (TSTR("checkpoint invalidate of %d blocks"TENDSTR),
 		dev->blocksInCheckpoint));
 
-<<<<<<< HEAD
-	return yaffs_CheckpointErase(dev);
-}
-=======
 	return yaffs2_CheckpointErase(dev);
 }
 
 
 
->>>>>>> origin/incrediblec-2.6.32

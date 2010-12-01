@@ -45,10 +45,7 @@ struct kgsl_driver {
 	int have_irq;
 
 	struct clk *grp_clk;
-<<<<<<< HEAD
-=======
 	struct clk *grp_pclk;
->>>>>>> origin/incrediblec-2.6.32
 	struct clk *imem_clk;
 	struct clk *ebi1_clk;
 #ifdef CONFIG_ARCH_MSM7227

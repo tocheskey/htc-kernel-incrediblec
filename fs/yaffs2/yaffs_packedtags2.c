@@ -1,11 +1,7 @@
 /*
  * YAFFS: Yet Another Flash File System. A NAND-flash specific file system.
  *
-<<<<<<< HEAD
- * Copyright (C) 2002-2007 Aleph One Ltd.
-=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
->>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>
@@ -17,10 +13,7 @@
 
 #include "yaffs_packedtags2.h"
 #include "yportenv.h"
-<<<<<<< HEAD
-=======
 #include "yaffs_trace.h"
->>>>>>> origin/incrediblec-2.6.32
 #include "yaffs_tagsvalidity.h"
 
 /* This code packs a set of extended tags into a binary structure for
@@ -45,12 +38,6 @@
 #define EXTRA_OBJECT_TYPE_SHIFT (28)
 #define EXTRA_OBJECT_TYPE_MASK  ((0x0F) << EXTRA_OBJECT_TYPE_SHIFT)
 
-<<<<<<< HEAD
-#ifndef CONFIG_YAFFS_DOES_ECC
-#define YAFFS_IGNORE_TAGS_ECC 1
-#endif
-=======
->>>>>>> origin/incrediblec-2.6.32
 
 static void yaffs_DumpPackedTags2TagsPart(const yaffs_PackedTags2TagsPart *ptt)
 {
@@ -110,19 +97,6 @@ void yaffs_PackTags2TagsPart(yaffs_PackedTags2TagsPart *ptt,
 }
 
 
-<<<<<<< HEAD
-void yaffs_PackTags2(yaffs_PackedTags2 *pt, const yaffs_ExtendedTags *t)
-{
-	yaffs_PackTags2TagsPart(&pt->t, t);
-
-#ifndef YAFFS_IGNORE_TAGS_ECC
-	{
-		yaffs_ECCCalculateOther((unsigned char *)&pt->t,
-					sizeof(yaffs_PackedTags2TagsPart),
-					&pt->ecc);
-	}
-#endif
-=======
 void yaffs_PackTags2(yaffs_PackedTags2 *pt, const yaffs_ExtendedTags *t, int tagsECC)
 {
 	yaffs_PackTags2TagsPart(&pt->t, t);
@@ -131,7 +105,6 @@ void yaffs_PackTags2(yaffs_PackedTags2 *pt, const yaffs_ExtendedTags *t, int tag
 		yaffs_ECCCalculateOther((unsigned char *)&pt->t,
 					sizeof(yaffs_PackedTags2TagsPart),
 					&pt->ecc);
->>>>>>> origin/incrediblec-2.6.32
 }
 
 
@@ -183,33 +156,11 @@ void yaffs_UnpackTags2TagsPart(yaffs_ExtendedTags *t,
 }
 
 
-<<<<<<< HEAD
-void yaffs_UnpackTags2(yaffs_ExtendedTags *t, yaffs_PackedTags2 *pt)
-=======
 void yaffs_UnpackTags2(yaffs_ExtendedTags *t, yaffs_PackedTags2 *pt, int tagsECC)
->>>>>>> origin/incrediblec-2.6.32
 {
 
 	yaffs_ECCResult eccResult = YAFFS_ECC_RESULT_NO_ERROR;
 
-<<<<<<< HEAD
-	if (pt->t.sequenceNumber != 0xFFFFFFFF) {
-		/* Page is in use */
-#ifndef YAFFS_IGNORE_TAGS_ECC
-		{
-			yaffs_ECCOther ecc;
-			int result;
-			yaffs_ECCCalculateOther((unsigned char *)&pt->t,
-						sizeof
-						(yaffs_PackedTags2TagsPart),
-						&ecc);
-			result =
-			    yaffs_ECCCorrectOther((unsigned char *)&pt->t,
-						  sizeof
-						  (yaffs_PackedTags2TagsPart),
-						  &pt->ecc, &ecc);
-			switch (result) {
-=======
 	if (pt->t.sequenceNumber != 0xFFFFFFFF &&
 	    tagsECC){
 		/* Chunk is in use and we need to do ECC */
@@ -223,7 +174,6 @@ void yaffs_UnpackTags2(yaffs_ExtendedTags *t, yaffs_PackedTags2 *pt, int tagsECC
 						sizeof(yaffs_PackedTags2TagsPart),
 						&pt->ecc, &ecc);
 		switch (result) {
->>>>>>> origin/incrediblec-2.6.32
 			case 0:
 				eccResult = YAFFS_ECC_RESULT_NO_ERROR;
 				break;
@@ -235,13 +185,7 @@ void yaffs_UnpackTags2(yaffs_ExtendedTags *t, yaffs_PackedTags2 *pt, int tagsECC
 				break;
 			default:
 				eccResult = YAFFS_ECC_RESULT_UNKNOWN;
-<<<<<<< HEAD
-			}
 		}
-#endif
-=======
-		}
->>>>>>> origin/incrediblec-2.6.32
 	}
 
 	yaffs_UnpackTags2TagsPart(t, &pt->t);
@@ -250,9 +194,5 @@ void yaffs_UnpackTags2(yaffs_ExtendedTags *t, yaffs_PackedTags2 *pt, int tagsECC
 
 	yaffs_DumpPackedTags2(pt);
 	yaffs_DumpTags2(t);
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 }
 

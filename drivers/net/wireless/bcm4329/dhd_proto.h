@@ -4,11 +4,7 @@
  * Provides type definitions and function prototypes used to link the
  * DHD OS, bus, and protocol modules.
  *
-<<<<<<< HEAD
- * Copyright (C) 1999-2009, Broadcom Corporation
-=======
  * Copyright (C) 1999-2010, Broadcom Corporation
->>>>>>> origin/incrediblec-2.6.32
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -28,11 +24,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: dhd_proto.h,v 1.2.82.1.4.1.16.6 2009/06/17 01:01:55 Exp $
-=======
  * $Id: dhd_proto.h,v 1.2.82.1.4.1.16.7 2010/05/10 12:54:59 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 
 #ifndef _dhd_proto_h_
@@ -42,15 +34,11 @@
 #include <wlioctl.h>
 
 #ifndef IOCTL_RESP_TIMEOUT
-<<<<<<< HEAD
-#define IOCTL_RESP_TIMEOUT  2000 /* In milli second */
-=======
 #define IOCTL_RESP_TIMEOUT  3000 /* In milli second */
 #endif
 
 #ifndef IOCTL_CHIP_ACTIVE_TIMEOUT
 #define IOCTL_CHIP_ACTIVE_TIMEOUT  10 /* In milli second */
->>>>>>> origin/incrediblec-2.6.32
 #endif
 
 /*

@@ -528,38 +528,18 @@ static void __init free_unused_memmap_node(int node, struct meminfo *mi)
 	unsigned int i;
 
 	/*
-<<<<<<< HEAD
-	 * [FIXME] This relies on each bank being in address order.  This
-	 * may not be the case, especially if the user has provided the
-	 * information on the command line.
-=======
 	 * This relies on each bank being in address order.
 	 * The banks are sorted previously in bootmem_init().
->>>>>>> origin/incrediblec-2.6.32
 	 */
 	for_each_nodebank(i, mi, node) {
 		struct membank *bank = &mi->bank[i];
 
 		bank_start = bank_pfn_start(bank);
-<<<<<<< HEAD
-		if (bank_start < prev_bank_end) {
-			printk(KERN_ERR "MEM: unordered memory banks.  "
-				"Not freeing memmap.\n");
-			break;
-		}
-=======
->>>>>>> origin/incrediblec-2.6.32
 
 		/*
 		 * If we had a previous bank, and there is a space
 		 * between the current bank and the previous, free it.
 		 */
-<<<<<<< HEAD
-		if (prev_bank_end && prev_bank_end != bank_start)
-			free_memmap(node, prev_bank_end, bank_start);
-
-		prev_bank_end = bank_pfn_end(bank);
-=======
 		if (prev_bank_end && prev_bank_end < bank_start)
 			free_memmap(node, prev_bank_end, bank_start);
 
@@ -569,7 +549,6 @@ static void __init free_unused_memmap_node(int node, struct meminfo *mi)
 		 * MAX_ORDER_NR_PAGES.
 		 */
 		prev_bank_end = ALIGN(bank_pfn_end(bank), MAX_ORDER_NR_PAGES);
->>>>>>> origin/incrediblec-2.6.32
 	}
 }
 
@@ -652,10 +631,10 @@ void __init mem_init(void)
 void free_initmem(void)
 {
 #ifdef CONFIG_HAVE_TCM
-	extern char *__tcm_start, *__tcm_end;
+	extern char __tcm_start, __tcm_end;
 
-	totalram_pages += free_area(__phys_to_pfn(__pa(__tcm_start)),
-				    __phys_to_pfn(__pa(__tcm_end)),
+	totalram_pages += free_area(__phys_to_pfn(__pa(&__tcm_start)),
+				    __phys_to_pfn(__pa(&__tcm_end)),
 				    "TCM link");
 #endif
 

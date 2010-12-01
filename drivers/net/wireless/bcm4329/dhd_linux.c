@@ -22,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: dhd_linux.c,v 1.65.4.9.2.12.2.66 2010/04/01 17:01:25 Exp $
-=======
  * $Id: dhd_linux.c,v 1.65.4.9.2.12.2.104 2010/08/20 19:15:40 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 
 #ifdef CONFIG_WIFI_CONTROL_FUNC
@@ -65,10 +61,6 @@
 #ifdef CONFIG_HAS_WAKELOCK
 #include <linux/wakelock.h>
 #endif
-<<<<<<< HEAD
-#include <linux/freezer.h>
-=======
->>>>>>> origin/incrediblec-2.6.32
 #if defined(CUSTOMER_HW2) && defined(CONFIG_WIFI_CONTROL_FUNC)
 #include <linux/wlan_plat.h>
 
@@ -123,8 +115,6 @@ int wifi_set_reset(int on, unsigned long msec)
 	return 0;
 }
 
-<<<<<<< HEAD
-=======
 int wifi_get_mac_addr(unsigned char *buf)
 {
 	printk("%s\n", __FUNCTION__);
@@ -136,7 +126,6 @@ int wifi_get_mac_addr(unsigned char *buf)
 	return -EOPNOTSUPP;
 }
 
->>>>>>> origin/incrediblec-2.6.32
 static int wifi_probe(struct platform_device *pdev)
 {
 	struct wifi_platform_data *wifi_ctrl =
@@ -161,13 +150,8 @@ static int wifi_remove(struct platform_device *pdev)
 	DHD_TRACE(("## %s\n", __FUNCTION__));
 	wifi_control_data = wifi_ctrl;
 
-<<<<<<< HEAD
-	wifi_set_carddetect(0);	/* CardDetect (1->0) */
-	wifi_set_power(0, 0);	/* Power Off */
-=======
 	wifi_set_power(0, 0);	/* Power Off */
 	wifi_set_carddetect(0);	/* CardDetect (1->0) */
->>>>>>> origin/incrediblec-2.6.32
 
 	up(&wifi_control_sem);
 	return 0;
@@ -231,14 +215,6 @@ print_tainted()
 /* Linux wireless extension support */
 #if defined(CONFIG_WIRELESS_EXT)
 #include <wl_iw.h>
-<<<<<<< HEAD
-#endif
-
-#if defined(CONFIG_HAS_EARLYSUSPEND)
-#include <linux/earlysuspend.h>
-#endif /* defined(CONFIG_HAS_EARLYSUSPEND) */
-
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
 
 #if defined(CONFIG_HAS_EARLYSUSPEND)
@@ -251,7 +227,6 @@ extern void dhd_pktfilter_offload_set(dhd_pub_t * dhd, char *arg);
 extern void dhd_pktfilter_offload_enable(dhd_pub_t * dhd, char *arg, int enable, int master_mode);
 #endif
 
->>>>>>> origin/incrediblec-2.6.32
 /* Interface control information */
 typedef struct dhd_if {
 	struct dhd_info *info;			/* back pointer to dhd_info */
@@ -271,11 +246,7 @@ typedef struct dhd_if {
 typedef struct dhd_info {
 #if defined(CONFIG_WIRELESS_EXT)
 	wl_iw_t		iw;		/* wireless extensions state (must be first) */
-<<<<<<< HEAD
-#endif
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 	dhd_pub_t pub;
 
@@ -308,11 +279,8 @@ typedef struct dhd_info {
 	int wl_count;
 	int wl_packet;
 
-<<<<<<< HEAD
-=======
 	int hang_was_sent;
 
->>>>>>> origin/incrediblec-2.6.32
 	/* Thread to issue ioctl for multicast */
 	long sysioc_pid;
 	struct semaphore sysioc_sem;
@@ -336,12 +304,8 @@ char nvram_path[MOD_PARAM_PATHLEN];
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 struct semaphore dhd_registration_sem;
-<<<<<<< HEAD
-#endif 
-=======
 #define DHD_REGISTRATION_TIMEOUT  8000  /* msec : allowed time to finished dhd registration */
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) */
->>>>>>> origin/incrediblec-2.6.32
 /* load firmware and/or nvram values from the filesystem */
 module_param_string(firmware_path, firmware_path, MOD_PARAM_PATHLEN, 0);
 module_param_string(nvram_path, nvram_path, MOD_PARAM_PATHLEN, 0);
@@ -357,8 +321,6 @@ module_param(dhd_sysioc, uint, 0);
 uint dhd_watchdog_ms = 10;
 module_param(dhd_watchdog_ms, uint, 0);
 
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 /* Console poll interval */
 uint dhd_console_ms = 0;
@@ -384,7 +346,6 @@ module_param(dhd_pkt_filter_init, uint, 0);
 /* Pkt filter mode control */
 uint dhd_master_mode = TRUE;
 module_param(dhd_master_mode, uint, 1);
->>>>>>> origin/incrediblec-2.6.32
 
 /* Watchdog thread priority, -1 to use kernel timer */
 int dhd_watchdog_prio = 97;
@@ -398,8 +359,6 @@ module_param(dhd_dpc_prio, int, 0);
 extern int dhd_dongle_memsize;
 module_param(dhd_dongle_memsize, int, 0);
 
-<<<<<<< HEAD
-=======
 /* Contorl fw roaming */
 #ifdef CUSTOMER_HW2
 uint dhd_roam = 0;
@@ -410,7 +369,6 @@ uint dhd_roam = 1;
 /* Control radio state */
 uint dhd_radio_up = 1;
 
->>>>>>> origin/incrediblec-2.6.32
 /* Network inteface name */
 char iface_name[IFNAMSIZ];
 module_param_string(iface_name, iface_name, IFNAMSIZ, 0);
@@ -496,11 +454,7 @@ static char dhd_version[] = "Dongle Host Driver, version " EPI_VERSION_STR
 
 #if defined(CONFIG_WIRELESS_EXT)
 struct iw_statistics *dhd_get_wireless_stats(struct net_device *dev);
-<<<<<<< HEAD
-#endif
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 static void dhd_dpc(ulong data);
 /* forward decl */
@@ -520,20 +474,6 @@ static int dhd_wl_host_event(dhd_info_t *dhd, int *ifidx, void *pktdata,
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP)
 static int dhd_sleep_pm_callback(struct notifier_block *nfb, unsigned long action, void *ignored)
 {
-<<<<<<< HEAD
-	switch (action)
-	{
-		case PM_HIBERNATION_PREPARE:
-		case PM_SUSPEND_PREPARE:
-			dhd_mmc_suspend = TRUE;
-			return NOTIFY_OK;
-		case PM_POST_HIBERNATION:
-		case PM_POST_SUSPEND:
-			dhd_mmc_suspend = FALSE;
-		return NOTIFY_OK;
-	}
-	return 0;
-=======
 	int ret = NOTIFY_DONE;
 
 	switch (action) {
@@ -550,7 +490,6 @@ static int dhd_sleep_pm_callback(struct notifier_block *nfb, unsigned long actio
 	}
 	smp_mb();
 	return ret;
->>>>>>> origin/incrediblec-2.6.32
 }
 
 static struct notifier_block dhd_sleep_pm_notifier = {
@@ -561,20 +500,6 @@ extern int register_pm_notifier(struct notifier_block *nb);
 extern int unregister_pm_notifier(struct notifier_block *nb);
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP) */
 
-<<<<<<< HEAD
-
-#if defined(CONFIG_HAS_EARLYSUSPEND)
-extern int dhd_set_suspend(int value, dhd_pub_t *dhd);
-
-static void dhd_early_suspend(struct early_suspend *h)
-{
-	struct dhd_info *dhdp;
-	dhdp = container_of(h, struct dhd_info, early_suspend);
-
-	DHD_TRACE(("%s: enter\n", __FUNCTION__));
-
-	dhd_set_suspend(1, &dhdp->pub);
-=======
 static void dhd_set_packet_filter(int value, dhd_pub_t *dhd)
 {
 #ifdef PKT_FILTER_SUPPORT
@@ -685,26 +610,16 @@ static void dhd_early_suspend(struct early_suspend *h)
 
 	if (dhd)
 		dhd_suspend_resume_helper(dhd, 1);
->>>>>>> origin/incrediblec-2.6.32
 }
 
 static void dhd_late_resume(struct early_suspend *h)
 {
-<<<<<<< HEAD
-	struct dhd_info *dhdp;
-	dhdp = container_of(h, struct dhd_info, early_suspend);
-
-	DHD_TRACE(("%s: enter\n", __FUNCTION__));
-
-	dhd_set_suspend(0, &dhdp->pub);
-=======
 	struct dhd_info *dhd = container_of(h, struct dhd_info, early_suspend);
 
 	DHD_TRACE(("%s: enter\n", __FUNCTION__));
 
 	if (dhd)
 		dhd_suspend_resume_helper(dhd, 0);
->>>>>>> origin/incrediblec-2.6.32
 }
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND) */
 
@@ -828,15 +743,11 @@ static void
 _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 {
 	struct net_device *dev;
-<<<<<<< HEAD
-	struct dev_mc_list *mclist;
-=======
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35)
 	struct netdev_hw_addr *ha;
 #else
 	struct dev_mc_list *mclist;
 #endif
->>>>>>> origin/incrediblec-2.6.32
 	uint32 allmulti, cnt;
 
 	wl_ioctl_t ioc;
@@ -846,10 +757,6 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 
 	ASSERT(dhd && dhd->iflist[ifidx]);
 	dev = dhd->iflist[ifidx]->net;
-<<<<<<< HEAD
-	mclist = dev->mc_list;
-	cnt = dev->mc_count;
-=======
 
 	netif_addr_lock_bh(dev);
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35)
@@ -858,17 +765,11 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	cnt = dev->mc_count;
 #endif
 	netif_addr_unlock_bh(dev);
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Determine initial value of allmulti flag */
 	allmulti = (dev->flags & IFF_ALLMULTI) ? TRUE : FALSE;
 
 	/* Send down the multicast list first. */
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	buflen = sizeof("mcast_list") + sizeof(cnt) + (cnt * ETHER_ADDR_LEN);
 	if (!(bufp = buf = MALLOC(dhd->pub.osh, buflen))) {
 		DHD_ERROR(("%s: out of memory for mcast_list, cnt %d\n",
@@ -883,12 +784,6 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	memcpy(bufp, &cnt, sizeof(cnt));
 	bufp += sizeof(cnt);
 
-<<<<<<< HEAD
-	for (cnt = 0; mclist && (cnt < dev->mc_count); cnt++, mclist = mclist->next) {
-		memcpy(bufp, (void *)mclist->dmi_addr, ETHER_ADDR_LEN);
-		bufp += ETHER_ADDR_LEN;
-	}
-=======
 	netif_addr_lock_bh(dev);
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35)
 	netdev_for_each_mc_addr(ha, dev) {
@@ -905,7 +800,6 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	}
 #endif
 	netif_addr_unlock_bh(dev);
->>>>>>> origin/incrediblec-2.6.32
 
 	memset(&ioc, 0, sizeof(ioc));
 	ioc.cmd = WLC_SET_VAR;
@@ -1095,11 +989,6 @@ _dhd_sysioc_thread(void *data)
 	bool in_ap = FALSE;
 #endif
 
-<<<<<<< HEAD
-	set_freezable();
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	DAEMONIZE("dhd_sysioc");
 
 	while (down_interruptible(&dhd->sysioc_sem) == 0) {
@@ -1229,25 +1118,19 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
-<<<<<<< HEAD
-=======
 	dhd_os_wake_lock(&dhd->pub);
 
->>>>>>> origin/incrediblec-2.6.32
 	/* Reject if down */
 	if (!dhd->pub.up || (dhd->pub.busstate == DHD_BUS_DOWN)) {
 		DHD_ERROR(("%s: xmit rejected pub.up=%d busstate=%d\n",
 			 __FUNCTION__, dhd->pub.up, dhd->pub.busstate));
 		netif_stop_queue(net);
-<<<<<<< HEAD
-=======
 		/* Send Event when bus down detected during data session */
 		if (dhd->pub.busstate == DHD_BUS_DOWN)  {
 			DHD_ERROR(("%s: Event HANG send up\n", __FUNCTION__));
 			net_os_send_hang_message(net);
 		}
 		dhd_os_wake_unlock(&dhd->pub);
->>>>>>> origin/incrediblec-2.6.32
 		return -ENODEV;
 	}
 
@@ -1255,10 +1138,7 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 	if (ifidx == DHD_BAD_IF) {
 		DHD_ERROR(("%s: bad ifidx %d\n", __FUNCTION__, ifidx));
 		netif_stop_queue(net);
-<<<<<<< HEAD
-=======
 		dhd_os_wake_unlock(&dhd->pub);
->>>>>>> origin/incrediblec-2.6.32
 		return -ENODEV;
 	}
 
@@ -1290,21 +1170,14 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 
 	ret = dhd_sendpkt(&dhd->pub, ifidx, pktbuf);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 done:
 	if (ret)
 		dhd->pub.dstats.tx_dropped++;
 	else
 		dhd->pub.tx_packets++;
 
-<<<<<<< HEAD
-=======
 	dhd_os_wake_unlock(&dhd->pub);
 
->>>>>>> origin/incrediblec-2.6.32
 	/* Return ok: we always eat the packet */
 	return 0;
 }
@@ -1501,28 +1374,17 @@ dhd_watchdog_thread(void *data)
 	}
 #endif /* DHD_SCHED */
 
-<<<<<<< HEAD
-	set_freezable();
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	DAEMONIZE("dhd_watchdog");
 
 	/* Run until signal received */
 	while (1) {
 		if (down_interruptible (&dhd->watchdog_sem) == 0) {
 			dhd_os_wake_lock(&dhd->pub);
-<<<<<<< HEAD
-			/* Call the bus module watchdog */
-			dhd_bus_watchdog(&dhd->pub);
-
-=======
 
 			if (dhd->pub.dongle_reset == FALSE) {
 				/* Call the bus module watchdog */
 				dhd_bus_watchdog(&dhd->pub);
 			}
->>>>>>> origin/incrediblec-2.6.32
 			/* Count the tick for reference */
 			dhd->pub.tickcnt++;
 
@@ -1556,17 +1418,8 @@ dhd_watchdog(ulong data)
 	dhd->pub.tickcnt++;
 
 	/* Reschedule the watchdog */
-<<<<<<< HEAD
-#if defined(CONTINUOUS_WATCHDOG)
-	mod_timer(&dhd->timer, jiffies + dhd_watchdog_ms * HZ / 1000);
-#else
 	if (dhd->wd_timer_valid)
 		mod_timer(&dhd->timer, jiffies + dhd_watchdog_ms * HZ / 1000);
-#endif /* defined(CONTINUOUS_WATCHDOG) */
-=======
-	if (dhd->wd_timer_valid)
-		mod_timer(&dhd->timer, jiffies + dhd_watchdog_ms * HZ / 1000);
->>>>>>> origin/incrediblec-2.6.32
 }
 
 static int
@@ -1586,11 +1439,6 @@ dhd_dpc_thread(void *data)
 	}
 #endif /* DHD_SCHED */
 
-<<<<<<< HEAD
-	set_freezable();
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	DAEMONIZE("dhd_dpc");
 
 	/* Run until signal received */
@@ -1859,43 +1707,22 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 	uint driver = 0;
 	int ifidx;
 	bool is_set_key_cmd;
-<<<<<<< HEAD
-=======
 	int ret;
 
 	dhd_os_wake_lock(&dhd->pub);
->>>>>>> origin/incrediblec-2.6.32
 
 	ifidx = dhd_net2idx(dhd, net);
 	DHD_TRACE(("%s: ifidx %d, cmd 0x%04x\n", __FUNCTION__, ifidx, cmd));
 
-<<<<<<< HEAD
-	if (ifidx == DHD_BAD_IF)
-		return -1;
-=======
 	if (ifidx == DHD_BAD_IF) {
 		dhd_os_wake_unlock(&dhd->pub);
 		return -1;
 	}
->>>>>>> origin/incrediblec-2.6.32
 
 #if defined(CONFIG_WIRELESS_EXT)
 	/* linux wireless extensions */
 	if ((cmd >= SIOCIWFIRST) && (cmd <= SIOCIWLAST)) {
 		/* may recurse, do NOT lock */
-<<<<<<< HEAD
-		return wl_iw_ioctl(net, ifr, cmd);
-	}
-#endif
-
-#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 4, 2)
-	if (cmd == SIOCETHTOOL)
-		return (dhd_ethtool(dhd, (void*)ifr->ifr_data));
-#endif /* LINUX_VERSION_CODE > KERNEL_VERSION(2, 4, 2) */
-
-	if (cmd != SIOCDEVPRIVATE)
-		return -EOPNOTSUPP;
-=======
 		ret = wl_iw_ioctl(net, ifr, cmd);
 		dhd_os_wake_unlock(&dhd->pub);
 		return ret;
@@ -1914,7 +1741,6 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 		dhd_os_wake_unlock(&dhd->pub);
 		return -EOPNOTSUPP;
 	}
->>>>>>> origin/incrediblec-2.6.32
 
 	memset(&ioc, 0, sizeof(ioc));
 
@@ -1992,15 +1818,12 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 	bcmerror = dhd_prot_ioctl(&dhd->pub, ifidx, (wl_ioctl_t *)&ioc, buf, buflen);
 
 done:
-<<<<<<< HEAD
-=======
 	if ((bcmerror == -ETIMEDOUT) || ((dhd->pub.busstate == DHD_BUS_DOWN) &&
 			(!dhd->pub.dongle_reset))) {
 		DHD_ERROR(("%s: Event HANG send up\n", __FUNCTION__));
 		net_os_send_hang_message(net);
 	}
 
->>>>>>> origin/incrediblec-2.6.32
 	if (!bcmerror && buf && ioc.buf) {
 		if (copy_to_user(ioc.buf, buf, buflen))
 			bcmerror = -EFAULT;
@@ -2009,11 +1832,8 @@ done:
 	if (buf)
 		MFREE(dhd->pub.osh, buf, buflen);
 
-<<<<<<< HEAD
-=======
 	dhd_os_wake_unlock(&dhd->pub);
 
->>>>>>> origin/incrediblec-2.6.32
 	return OSL_ERROR(bcmerror);
 }
 
@@ -2024,10 +1844,6 @@ dhd_stop(struct net_device *net)
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
 
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	if (dhd->pub.up == 0) {
 		return 0;
 	}
@@ -2096,11 +1912,7 @@ dhd_osl_detach(osl_t *osh)
 	osl_detach(osh);
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && 1
 	up(&dhd_registration_sem);
-<<<<<<< HEAD
-#endif 
-=======
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) */
->>>>>>> origin/incrediblec-2.6.32
 }
 
 int
@@ -2248,11 +2060,7 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 		DHD_ERROR(("wl_iw_attach failed\n"));
 		goto fail;
 	}
-<<<<<<< HEAD
-#endif
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Set up the watchdog timer */
 	init_timer(&dhd->timer);
@@ -2332,12 +2140,9 @@ dhd_bus_start(dhd_pub_t *dhdp)
 {
 	int ret = -1;
 	dhd_info_t *dhd = (dhd_info_t*)dhdp->info;
-<<<<<<< HEAD
-=======
 #ifdef EMBEDDED_PLATFORM
 	char iovbuf[WL_EVENTING_MASK_LEN + 12];	/*  Room for "event_msgs" + '\0' + bitvec  */
 #endif /* EMBEDDED_PLATFORM */
->>>>>>> origin/incrediblec-2.6.32
 
 	ASSERT(dhd);
 
@@ -2383,8 +2188,6 @@ dhd_bus_start(dhd_pub_t *dhdp)
 		return -ENODEV;
 	}
 
-<<<<<<< HEAD
-=======
 #ifdef EMBEDDED_PLATFORM
 	bcm_mkiovar("event_msgs", dhdp->eventmask, WL_EVENTING_MASK_LEN, iovbuf, sizeof(iovbuf));
 	dhdcdc_query_ioctl(dhdp, 0, WLC_GET_VAR, iovbuf, sizeof(iovbuf));
@@ -2420,7 +2223,6 @@ dhd_bus_start(dhd_pub_t *dhdp)
 	dhdp->pktfilter[0] = "100 0 0 0 0x01 0x00";
 #endif /* EMBEDDED_PLATFORM */
 
->>>>>>> origin/incrediblec-2.6.32
 	/* Bus is ready, do any protocol initialization */
 	if ((ret = dhd_prot_init(&dhd->pub)) < 0)
 		return ret;
@@ -2523,22 +2325,14 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 	net->ethtool_ops = &dhd_ethtool_ops;
 #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 24) */
 
-<<<<<<< HEAD
-#ifdef CONFIG_WIRELESS_EXT
-=======
 #if defined(CONFIG_WIRELESS_EXT)
->>>>>>> origin/incrediblec-2.6.32
 #if WIRELESS_EXT < 19
 	net->get_wireless_stats = dhd_get_wireless_stats;
 #endif /* WIRELESS_EXT < 19 */
 #if WIRELESS_EXT > 12
 	net->wireless_handlers = (struct iw_handler_def *)&wl_iw_handler_def;
 #endif /* WIRELESS_EXT > 12 */
-<<<<<<< HEAD
-#endif /* CONFIG_WIRELESS_EXT */
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 	dhd->pub.rxsz = net->mtu + net->hard_header_len + dhd->pub.hdrlen;
 
@@ -2552,11 +2346,8 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 	printf("%s: Broadcom Dongle Host Driver mac=%.2x:%.2x:%.2x:%.2x:%.2x:%.2x\n", net->name,
 	       dhd->pub.mac.octet[0], dhd->pub.mac.octet[1], dhd->pub.mac.octet[2],
 	       dhd->pub.mac.octet[3], dhd->pub.mac.octet[4], dhd->pub.mac.octet[5]);
-<<<<<<< HEAD
-=======
 
 #if defined(CONFIG_WIRELESS_EXT)
->>>>>>> origin/incrediblec-2.6.32
 #ifdef SOFTAP
 	if (ifidx == 0)
 		/* Don't call for SOFTAP Interface in SOFTAP MODE */
@@ -2564,18 +2355,11 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 #else
 		wl_iw_iscan_set_scan_broadcast_prep(net, 1);
 #endif /* SOFTAP */
-<<<<<<< HEAD
-
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
-	up(&dhd_registration_sem);
-#endif 
-=======
 #endif /* CONFIG_WIRELESS_EXT */
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 	up(&dhd_registration_sem);
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) */
->>>>>>> origin/incrediblec-2.6.32
 	return 0;
 
 fail:
@@ -2627,12 +2411,8 @@ dhd_detach(dhd_pub_t *dhdp)
 			int i;
 
 #if defined(CONFIG_HAS_EARLYSUSPEND)
-<<<<<<< HEAD
-			unregister_early_suspend(&dhd->early_suspend);
-=======
 			if (dhd->early_suspend.suspend)
 				unregister_early_suspend(&dhd->early_suspend);
->>>>>>> origin/incrediblec-2.6.32
 #endif	/* defined(CONFIG_HAS_EARLYSUSPEND) */
 #if defined(CONFIG_WIRELESS_EXT)
 			/* Attach and link in the iw */
@@ -2692,8 +2472,6 @@ dhd_detach(dhd_pub_t *dhdp)
 	}
 }
 
-<<<<<<< HEAD
-=======
 static void __exit
 dhd_module_cleanup(void)
 {
@@ -2707,7 +2485,6 @@ dhd_module_cleanup(void)
 	dhd_customer_gpio_wlan_ctrl(WLAN_POWER_OFF);
 }
 
->>>>>>> origin/incrediblec-2.6.32
 static int __init
 dhd_module_init(void)
 {
@@ -2767,11 +2544,7 @@ dhd_module_init(void)
 	 * It's needed to make sync up exit from dhd insmod  and
 	 * Kernel MMC sdio device callback registration
 	 */
-<<<<<<< HEAD
-	if (down_timeout(&dhd_registration_sem,  msecs_to_jiffies(10000)) != 0) {
-=======
 	if (down_timeout(&dhd_registration_sem,  msecs_to_jiffies(DHD_REGISTRATION_TIMEOUT)) != 0) {
->>>>>>> origin/incrediblec-2.6.32
 		error = -EINVAL;
 		DHD_ERROR(("%s: sdio_register_driver timeout\n", __FUNCTION__));
 		goto fail_2;
@@ -2794,23 +2567,6 @@ fail_0:
 	return error;
 }
 
-<<<<<<< HEAD
-static void __exit
-dhd_module_cleanup(void)
-{
-	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
-
-	dhd_bus_unregister();
-#if defined(CUSTOMER_HW2) && defined(CONFIG_WIFI_CONTROL_FUNC)
-	wifi_del_dev();
-#endif
-	/* Call customer gpio to turn off power with WL_REG_ON signal */
-	dhd_customer_gpio_wlan_ctrl(WLAN_POWER_OFF);
-}
-
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 module_init(dhd_module_init);
 module_exit(dhd_module_cleanup);
 
@@ -2863,27 +2619,17 @@ dhd_os_ioctl_resp_wait(dhd_pub_t *pub, uint *condition, bool *pending)
 	int timeout = dhd_ioctl_timeout_msec;
 
 	/* Convert timeout in millsecond to jiffies */
-<<<<<<< HEAD
-	timeout = timeout * HZ / 1000;
-=======
 	/* timeout = timeout * HZ / 1000; */
 	timeout = msecs_to_jiffies(timeout);
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Wait until control frame is available */
 	add_wait_queue(&dhd->ioctl_resp_wait, &wait);
 	set_current_state(TASK_INTERRUPTIBLE);
-<<<<<<< HEAD
-
-	while (!(*condition) && (!signal_pending(current) && timeout))
-		timeout = schedule_timeout(timeout);
-=======
 	smp_mb();
 	while (!(*condition) && (!signal_pending(current) && timeout)) {
 		timeout = schedule_timeout(timeout);
 		smp_mb();
 	}
->>>>>>> origin/incrediblec-2.6.32
 
 	if (signal_pending(current))
 		*pending = TRUE;
@@ -2910,21 +2656,12 @@ void
 dhd_os_wd_timer(void *bus, uint wdtick)
 {
 	dhd_pub_t *pub = bus;
-<<<<<<< HEAD
-	dhd_info_t *dhd = (dhd_info_t *)pub->info;
-	static uint save_dhd_watchdog_ms = 0;
-
-	if (pub->busstate == DHD_BUS_DOWN) {
-		return;
-	}
-=======
 	static uint save_dhd_watchdog_ms = 0;
 	dhd_info_t *dhd = (dhd_info_t *)pub->info;
 
 	/* don't start the wd until fw is loaded */
 	if (pub->busstate == DHD_BUS_DOWN)
 		return;
->>>>>>> origin/incrediblec-2.6.32
 
 	/* Totally stop the timer */
 	if (!wdtick && dhd->wd_timer_valid == TRUE) {
@@ -3088,11 +2825,7 @@ dhd_get_wireless_stats(struct net_device *dev)
 	else
 		return NULL;
 }
-<<<<<<< HEAD
-#endif
-=======
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 static int
 dhd_wl_host_event(dhd_info_t *dhd, int *ifidx, void *pktdata,
@@ -3108,17 +2841,11 @@ dhd_wl_host_event(dhd_info_t *dhd, int *ifidx, void *pktdata,
 
 #if defined(CONFIG_WIRELESS_EXT)
 	ASSERT(dhd->iflist[*ifidx] != NULL);
-<<<<<<< HEAD
-
-	wl_iw_event(dhd->iflist[*ifidx]->net, event, *data);
-#endif
-=======
 	ASSERT(dhd->iflist[*ifidx]->net != NULL);
 
 	if (dhd->iflist[*ifidx]->net)
 		wl_iw_event(dhd->iflist[*ifidx]->net, event, *data);
 #endif /* defined(CONFIG_WIRELESS_EXT) */
->>>>>>> origin/incrediblec-2.6.32
 
 	return (bcmerror);
 }
@@ -3168,17 +2895,11 @@ dhd_dev_reset(struct net_device *dev, uint8 flag)
 	/* Turning on watchdog back */
 	if (!flag)
 		dhd_os_wd_timer(&dhd->pub, dhd_watchdog_ms);
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 	DHD_ERROR(("%s:  WLAN OFF DONE\n", __FUNCTION__));
 
 	return 1;
 }
 
-<<<<<<< HEAD
-=======
 int net_os_set_suspend_disable(struct net_device *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -3238,7 +2959,6 @@ int net_os_set_packet_filter(struct net_device *dev, int val)
 }
 
 
->>>>>>> origin/incrediblec-2.6.32
 void
 dhd_dev_init_ioctl(struct net_device *dev)
 {
@@ -3247,8 +2967,6 @@ dhd_dev_init_ioctl(struct net_device *dev)
 	dhd_preinit_ioctls(&dhd->pub);
 }
 
-<<<<<<< HEAD
-=======
 #ifdef PNO_SUPPORT
 /* Linux wrapper to call common dhd_pno_clean */
 int
@@ -3290,7 +3008,6 @@ dhd_dev_get_pno_status(struct net_device *dev)
 
 #endif /* PNO_SUPPORT */
 
->>>>>>> origin/incrediblec-2.6.32
 static int
 dhd_get_pend_8021x_cnt(dhd_info_t *dhd)
 {
@@ -3319,8 +3036,6 @@ dhd_wait_pend8021x(struct net_device *dev)
 	return pend;
 }
 
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 int
 write_to_file(dhd_pub_t *dhd, uint8 *buf, int size)
@@ -3358,7 +3073,6 @@ exit:
 }
 #endif /* DHD_DEBUG */
 
->>>>>>> origin/incrediblec-2.6.32
 int dhd_os_wake_lock_timeout(dhd_pub_t *pub)
 {
 	dhd_info_t *dhd = (dhd_info_t *)(pub->info);
@@ -3475,8 +3189,6 @@ int net_os_wake_unlock(struct net_device *dev)
 		ret = dhd_os_wake_unlock(&dhd->pub);
 	return ret;
 }
-<<<<<<< HEAD
-=======
 
 int net_os_send_hang_message(struct net_device *dev)
 {
@@ -3491,4 +3203,3 @@ int net_os_send_hang_message(struct net_device *dev)
 	}
 	return ret;
 }
->>>>>>> origin/incrediblec-2.6.32

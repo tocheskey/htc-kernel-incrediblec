@@ -20,10 +20,7 @@ struct wifi_platform_data {
 	int (*set_reset)(int val);
 	int (*set_carddetect)(int val);
 	void *(*mem_prealloc)(int section, unsigned long size);
-<<<<<<< HEAD
-=======
   int (*get_mac_addr)(unsigned char *buf);
->>>>>>> origin/incrediblec-2.6.32
 };
 
 #endif

@@ -254,10 +254,7 @@ struct axidata {
 	}
 #endif
 
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_MSM_CAMERA_V4L2
->>>>>>> origin/incrediblec-2.6.32
 /* Below functions are added for V4L2 kernel APIs */
 struct msm_v4l2_driver {
 	struct msm_sync *sync;
@@ -274,10 +271,7 @@ struct msm_v4l2_driver {
 
 int msm_v4l2_register(struct msm_v4l2_driver *);
 int msm_v4l2_unregister(struct msm_v4l2_driver *);
-<<<<<<< HEAD
-=======
 #endif
->>>>>>> origin/incrediblec-2.6.32
 
 void msm_camvfe_init(void);
 int msm_camvfe_check(void *);

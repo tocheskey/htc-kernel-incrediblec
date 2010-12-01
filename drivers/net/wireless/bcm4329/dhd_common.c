@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
- * $Id: dhd_common.c,v 1.5.6.8.2.6.6.41 2010/02/24 01:52:41 Exp $
-=======
  * $Id: dhd_common.c,v 1.5.6.8.2.6.6.69 2010/08/20 00:39:21 Exp $
->>>>>>> origin/incrediblec-2.6.32
  */
 #include <typedefs.h>
 #include <osl.h>
@@ -41,11 +37,6 @@
 #include <dhd_dbg.h>
 #include <msgtrace.h>
 
-<<<<<<< HEAD
-
-int dhd_msg_level;
-
-=======
 #include <wlioctl.h>
 
 #ifdef SET_RANDOM_MAC_SOFTAP
@@ -61,7 +52,6 @@ int dhd_msg_level;
 
 #include <wl_iw.h>
 
->>>>>>> origin/incrediblec-2.6.32
 char fw_path[MOD_PARAM_PATHLEN];
 char nv_path[MOD_PARAM_PATHLEN];
 
@@ -70,8 +60,6 @@ uint32 dhd_conn_event;
 uint32 dhd_conn_status;
 uint32 dhd_conn_reason;
 
-<<<<<<< HEAD
-=======
 #define htod32(i) i
 #define htod16(i) i
 #define dtoh32(i) i
@@ -91,7 +79,6 @@ void dhd_iscan_unlock(void);
 #error DHD_SDALIGN is not a power of 2!
 #endif
 
->>>>>>> origin/incrediblec-2.6.32
 #ifdef DHD_DEBUG
 const char dhd_version[] = "Dongle Host Driver, version " EPI_VERSION_STR "\nCompiled on "
 	__DATE__ " at " __TIME__;
@@ -101,10 +88,6 @@ const char dhd_version[] = "Dongle Host Driver, version " EPI_VERSION_STR;
 
 void dhd_set_timer(void *bus, uint wdtick);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/incrediblec-2.6.32
 /* IOVar table */
 enum {
 	IOV_VERSION = 1,
@@ -113,13 +96,10 @@ enum {
 	IOV_BCMERROR,
 	IOV_WDTICK,
 	IOV_DUMP,
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 	IOV_CONS,
 	IOV_DCONSOLE_POLL,
 #endif
->>>>>>> origin/incrediblec-2.6.32
 	IOV_CLEARCOUNTS,
 	IOV_LOGDUMP,
 	IOV_LOGCAL,
@@ -138,13 +118,10 @@ const bcm_iovar_t dhd_iovars[] = {
 	{"bcmerror",	IOV_BCMERROR,	0,	IOVT_INT8,	0 },
 	{"wdtick",	IOV_WDTICK, 0,	IOVT_UINT32,	0 },
 	{"dump",	IOV_DUMP,	0,	IOVT_BUFFER,	DHD_IOCTL_MAXLEN },
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 	{"dconpoll",	IOV_DCONSOLE_POLL, 0,	IOVT_UINT32,	0 },
 	{"cons",	IOV_CONS,	0,	IOVT_BUFFER,	0 },
 #endif
->>>>>>> origin/incrediblec-2.6.32
 	{"clearcounts", IOV_CLEARCOUNTS, 0, IOVT_VOID,	0 },
 	{"gpioob",	IOV_GPIOOB,	0,	IOVT_UINT32,	0 },
 	{"ioctl_timeout",	IOV_IOCTLTIMEOUT,	0,	IOVT_UINT32,	0 },
@@ -284,8 +261,6 @@ dhd_doiovar(dhd_pub_t *dhd_pub, const bcm_iovar_t *vi, uint32 actionid, const ch
 		bcmerror = dhd_dump(dhd_pub, arg, len);
 		break;
 
-<<<<<<< HEAD
-=======
 #ifdef DHD_DEBUG
 	case IOV_GVAL(IOV_DCONSOLE_POLL):
 		int_val = (int32)dhd_console_ms;
@@ -301,7 +276,6 @@ dhd_doiovar(dhd_pub_t *dhd_pub, const bcm_iovar_t *vi, uint32 actionid, const ch
 			bcmerror = dhd_bus_console_in(dhd_pub, arg, len - 1);
 		break;
 #endif
->>>>>>> origin/incrediblec-2.6.32
 
 	case IOV_SVAL(IOV_CLEARCOUNTS):
 		dhd_pub->tx_packets = dhd_pub->rx_packets = 0;
@@ -538,12 +512,6 @@ dhd_ioctl(dhd_pub_t *dhd_pub, dhd_ioctl_t *ioc, void *buf, uint buflen)
 	return bcmerror;
 }
 
-<<<<<<< HEAD
-#ifdef APSTA_PINGTEST
-struct ether_addr guest_eas[MAX_GUEST];
-#endif
-=======
->>>>>>> origin/incrediblec-2.6.32
 
 #ifdef SHOW_EVENTS
 static void
@@ -652,19 +620,6 @@ wl_show_host_event(wl_event_msg_t *event, void *event_data)
 
 	case WLC_E_ASSOC_IND:
 	case WLC_E_REASSOC_IND:
-<<<<<<< HEAD
-#ifdef APSTA_PINGTEST
-		{
-			int i;
-			for (i = 0; i < MAX_GUEST; ++i)
-				if (ETHER_ISNULLADDR(&guest_eas[i]))
-					break;
-			if (i < MAX_GUEST)
-				bcopy(event->addr.octet, guest_eas[i].octet, ETHER_ADDR_LEN);
-		}
-#endif /* APSTA_PINGTEST */
-=======
->>>>>>> origin/incrediblec-2.6.32
 		DHD_EVENT(("MACEVENT: %s, MAC %s\n", event_name, eabuf));
 		break;
 
@@ -685,21 +640,6 @@ wl_show_host_event(wl_event_msg_t *event, void *event_data)
 
 	case WLC_E_DEAUTH_IND:
 	case WLC_E_DISASSOC_IND:
-<<<<<<< HEAD
-#ifdef APSTA_PINGTEST
-		{
-			int i;
-			for (i = 0; i < MAX_GUEST; ++i) {
-				if (bcmp(guest_eas[i].octet, event->addr.octet,
-				         ETHER_ADDR_LEN) == 0) {
-					bzero(guest_eas[i].octet, ETHER_ADDR_LEN);
-					break;
-				}
-			}
-		}
-#endif /* APSTA_PINGTEST */
-=======
->>>>>>> origin/incrediblec-2.6.32
 		DHD_EVENT(("MACEVENT: %s, MAC %s, reason %d\n", event_name, eabuf, (int)reason));
 		break;
 
@@ -980,8 +920,6 @@ wl_event_to_host_order(wl_event_msg_t *evt)
 	evt->datalen = ntoh32(evt->datalen);
 	evt->version = ntoh16(evt->version);
 }
-<<<<<<< HEAD
-=======
 
 void print_buf(void *pbuf, int len, int bytes_per_line)
 {
@@ -2197,4 +2135,3 @@ wl_iw_parse_channel_list(char** list_str, uint16* channel_list, int channel_num)
 }
 
 #endif 
->>>>>>> origin/incrediblec-2.6.32
