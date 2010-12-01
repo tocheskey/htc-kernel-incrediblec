@@ -1,7 +1,11 @@
 /*
  * YAFFS: Yet another Flash File System . A NAND-flash specific file system.
  *
+<<<<<<< HEAD
+ * Copyright (C) 2002-2007 Aleph One Ltd.
+=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
+>>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>
@@ -16,9 +20,14 @@
 #ifndef __YAFFS_GUTS_H__
 #define __YAFFS_GUTS_H__
 
+<<<<<<< HEAD
+#include "devextras.h"
+#include "yportenv.h"
+=======
 #include "yportenv.h"
 #include "devextras.h"
 #include "yaffs_list.h"
+>>>>>>> origin/incrediblec-2.6.32
 
 #define YAFFS_OK	1
 #define YAFFS_FAIL  0
@@ -53,6 +62,10 @@
 
 #define YAFFS_MAX_CHUNK_ID		0x000FFFFF
 
+<<<<<<< HEAD
+#define YAFFS_UNUSED_OBJECT_ID		0x0003FFFF
+=======
+>>>>>>> origin/incrediblec-2.6.32
 
 #define YAFFS_ALLOCATION_NOBJECTS	100
 #define YAFFS_ALLOCATION_NTNODES	100
@@ -62,9 +75,14 @@
 
 
 #define YAFFS_OBJECT_SPACE		0x40000
+<<<<<<< HEAD
+
+#define YAFFS_CHECKPOINT_VERSION 	3
+=======
 #define YAFFS_MAX_OBJECT_ID		(YAFFS_OBJECT_SPACE -1)
 
 #define YAFFS_CHECKPOINT_VERSION 	4
+>>>>>>> origin/incrediblec-2.6.32
 
 #ifdef CONFIG_YAFFS_UNICODE
 #define YAFFS_MAX_NAME_LENGTH		127
@@ -82,11 +100,19 @@
 #define YAFFS_OBJECTID_UNLINKED		3
 #define YAFFS_OBJECTID_DELETED		4
 
+<<<<<<< HEAD
+/* Sseudo object ids for checkpointing */
+=======
 /* Pseudo object ids for checkpointing */
+>>>>>>> origin/incrediblec-2.6.32
 #define YAFFS_OBJECTID_SB_HEADER	0x10
 #define YAFFS_OBJECTID_CHECKPOINT_DATA	0x20
 #define YAFFS_SEQUENCE_CHECKPOINT_DATA  0x21
 
+<<<<<<< HEAD
+/* */
+=======
+>>>>>>> origin/incrediblec-2.6.32
 
 #define YAFFS_MAX_SHORT_OP_CACHES	20
 
@@ -119,7 +145,15 @@ typedef struct {
 	int dirty;
 	int nBytes;		/* Only valid if the cache is dirty */
 	int locked;		/* Can't push out or flush while locked. */
+<<<<<<< HEAD
+#ifdef CONFIG_YAFFS_YAFFS2
 	__u8 *data;
+#else
+	__u8 data[YAFFS_BYTES_PER_CHUNK];
+#endif
+=======
+	__u8 *data;
+>>>>>>> origin/incrediblec-2.6.32
 } yaffs_ChunkCache;
 
 
@@ -230,8 +264,11 @@ typedef enum {
 	YAFFS_BLOCK_STATE_UNKNOWN = 0,
 
 	YAFFS_BLOCK_STATE_SCANNING,
+<<<<<<< HEAD
+=======
         /* Being scanned */
 
+>>>>>>> origin/incrediblec-2.6.32
 	YAFFS_BLOCK_STATE_NEEDS_SCANNING,
 	/* The block might have something on it (ie it is allocating or full, perhaps empty)
 	 * but it needs to be scanned to determine its true state.
@@ -247,23 +284,39 @@ typedef enum {
 	/* This block is partially allocated.
 	 * At least one page holds valid data.
 	 * This is the one currently being used for page
+<<<<<<< HEAD
+	 * allocation. Should never be more than one of these
+=======
 	 * allocation. Should never be more than one of these.
          * If a block is only partially allocated at mount it is treated as full.
+>>>>>>> origin/incrediblec-2.6.32
 	 */
 
 	YAFFS_BLOCK_STATE_FULL,
 	/* All the pages in this block have been allocated.
+<<<<<<< HEAD
+	 */
+
+	YAFFS_BLOCK_STATE_DIRTY,
+	/* All pages have been allocated and deleted.
+=======
          * If a block was only partially allocated when mounted we treat
          * it as fully allocated.
 	 */
 
 	YAFFS_BLOCK_STATE_DIRTY,
 	/* The block was full and now all chunks have been deleted.
+>>>>>>> origin/incrediblec-2.6.32
 	 * Erase me, reuse me.
 	 */
 
 	YAFFS_BLOCK_STATE_CHECKPOINT,
+<<<<<<< HEAD
+	/* This block is assigned to holding checkpoint data.
+	 */
+=======
 	/* This block is assigned to holding checkpoint data. */
+>>>>>>> origin/incrediblec-2.6.32
 
 	YAFFS_BLOCK_STATE_COLLECTING,
 	/* This block is being garbage collected */
@@ -351,12 +404,30 @@ typedef struct {
 /*--------------------------- Tnode -------------------------- */
 
 union yaffs_Tnode_union {
+<<<<<<< HEAD
+#ifdef CONFIG_YAFFS_TNODE_LIST_DEBUG
+	union yaffs_Tnode_union *internal[YAFFS_NTNODES_INTERNAL + 1];
+#else
 	union yaffs_Tnode_union *internal[YAFFS_NTNODES_INTERNAL];
+#endif
+/*	__u16 level0[YAFFS_NTNODES_LEVEL0]; */
+=======
+	union yaffs_Tnode_union *internal[YAFFS_NTNODES_INTERNAL];
+>>>>>>> origin/incrediblec-2.6.32
 
 };
 
 typedef union yaffs_Tnode_union yaffs_Tnode;
 
+<<<<<<< HEAD
+struct yaffs_TnodeList_struct {
+	struct yaffs_TnodeList_struct *next;
+	yaffs_Tnode *tnodes;
+};
+
+typedef struct yaffs_TnodeList_struct yaffs_TnodeList;
+=======
+>>>>>>> origin/incrediblec-2.6.32
 
 /*------------------------  Object -----------------------------*/
 /* An object can be one of:
@@ -376,7 +447,10 @@ typedef struct {
 
 typedef struct {
 	struct ylist_head children;     /* list of child links */
+<<<<<<< HEAD
+=======
 	struct ylist_head dirty;	/* Entry for list of dirty directories */
+>>>>>>> origin/incrediblec-2.6.32
 } yaffs_DirectoryStructure;
 
 typedef struct {
@@ -395,8 +469,11 @@ typedef union {
 	yaffs_HardLinkStructure hardLinkVariant;
 } yaffs_ObjectVariant;
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> origin/incrediblec-2.6.32
 struct yaffs_ObjectStruct {
 	__u8 deleted:1;		/* This should only apply to unlinked files. */
 	__u8 softDeleted:1;	/* it has also been soft deleted */
@@ -416,10 +493,14 @@ struct yaffs_ObjectStruct {
 				 * until the inode is released.
 				 */
 	__u8 beingCreated:1;	/* This object is still being created so skip some checks. */
+<<<<<<< HEAD
+	__u8 isShadowed:1;      /* This object is shadowed on the way to being renamed. */
+=======
 	__u8 isShadowed:1;	/* This object is shadowed on the way to being renamed. */
 
 	__u8 xattrKnown:1;	/* We know if this has object has xattribs or not. */
 	__u8 hasXattr:1;	/* This object has xattribs. Valid if xattrKnown. */
+>>>>>>> origin/incrediblec-2.6.32
 
 	__u8 serial;		/* serial number of chunk in NAND. Cached here */
 	__u16 sum;		/* sum of the name to speed searching */
@@ -448,6 +529,13 @@ struct yaffs_ObjectStruct {
 	YCHAR shortName[YAFFS_SHORT_NAME_LENGTH + 1];
 #endif
 
+<<<<<<< HEAD
+#ifndef __KERNEL__
+	__u32 inUse;
+#endif
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 #ifdef CONFIG_YAFFS_WINCE
 	__u32 win_ctime[2];
 	__u32 win_mtime[2];
@@ -462,7 +550,14 @@ struct yaffs_ObjectStruct {
 
 	__u32 yst_rdev;
 
+<<<<<<< HEAD
+#ifdef __KERNEL__
+	struct inode *myInode;
+
+#endif
+=======
 	void *myInode;
+>>>>>>> origin/incrediblec-2.6.32
 
 	yaffs_ObjectType variantType;
 
@@ -472,6 +567,16 @@ struct yaffs_ObjectStruct {
 
 typedef struct yaffs_ObjectStruct yaffs_Object;
 
+<<<<<<< HEAD
+struct yaffs_ObjectList_struct {
+	yaffs_Object *objects;
+	struct yaffs_ObjectList_struct *next;
+};
+
+typedef struct yaffs_ObjectList_struct yaffs_ObjectList;
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 typedef struct {
 	struct ylist_head list;
 	int count;
@@ -513,6 +618,14 @@ typedef struct {
 
 /*----------------- Device ---------------------------------*/
 
+<<<<<<< HEAD
+struct yaffs_DeviceStruct {
+	struct ylist_head devList;
+	const char *name;
+
+	/* Entry parameters set up way early. Yaffs sets up the rest.*/
+	int nDataBytesPerChunk;	/* Should be a power of 2 >= 512 */
+=======
 
 struct yaffs_DeviceParamStruct {
 	const YCHAR *name;
@@ -525,6 +638,7 @@ struct yaffs_DeviceParamStruct {
 
 	int inbandTags;          /* Use unband tags */
 	__u32 totalBytesPerChunk; /* Should be >= 512, does not need to be a power of 2 */
+>>>>>>> origin/incrediblec-2.6.32
 	int nChunksPerBlock;	/* does not need to be a power of 2 */
 	int spareBytesPerChunk;	/* spare area size */
 	int startBlock;		/* Start block we're allowed to use */
@@ -533,6 +647,28 @@ struct yaffs_DeviceParamStruct {
 				/* reserved blocks on NOR and RAM. */
 
 
+<<<<<<< HEAD
+	/* Stuff used by the shared space checkpointing mechanism */
+	/* If this value is zero, then this mechanism is disabled */
+
+/*	int nCheckpointReservedBlocks; */ /* Blocks to reserve for checkpoint data */
+
+
+	int nShortOpCaches;	/* If <= 0, then short op caching is disabled, else
+				 * the number of short op caches (don't use too many)
+				 */
+
+	int useHeaderFileSize;	/* Flag to determine if we should use file sizes from the header */
+
+	int emptyLostAndFound;  /* Flasg to determine if lst+found should be emptied on init */
+
+	int useNANDECC;		/* Flag to decide whether or not to use NANDECC */
+
+	void *genericDevice;	/* Pointer to device context
+				 * On an mtd this holds the mtd pointer.
+				 */
+	void *superBlock;
+=======
 	int nShortOpCaches;	/* If <= 0, then short op caching is disabled, else
 				 * the number of short op caches (don't use too many).
                                  * 10 to 20 is a good bet.
@@ -551,6 +687,7 @@ struct yaffs_DeviceParamStruct {
 	__u8 skipCheckpointWrite;
 
 	int enableXattr;	/* Enable xattribs */
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* NAND access functions (Must be set before calling YAFFS)*/
 
@@ -577,6 +714,11 @@ struct yaffs_DeviceParamStruct {
 			       yaffs_BlockState *state, __u32 *sequenceNumber);
 #endif
 
+<<<<<<< HEAD
+	int isYaffs2;
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	/* The removeObjectCallback function must be supplied by OS flavours that
 	 * need it.
          * yaffs direct uses it to implement the faster readdir.
@@ -584,6 +726,25 @@ struct yaffs_DeviceParamStruct {
 	 */
 	void (*removeObjectCallback)(struct yaffs_ObjectStruct *obj);
 
+<<<<<<< HEAD
+	/* Callback to mark the superblock dirsty */
+	void (*markSuperBlockDirty)(void *superblock);
+
+	int wideTnodesDisabled; /* Set to disable wide tnodes */
+
+	YCHAR *pathDividers;	/* String of legal path dividers */
+
+
+	/* End of stuff that must be set before initialisation. */
+
+	/* Checkpoint control. Can be set before or after initialisation */
+	__u8 skipCheckpointRead;
+	__u8 skipCheckpointWrite;
+
+	/* Runtime parameters. Set up by YAFFS. */
+
+	__u16 chunkGroupBits;	/* 0 for devices <= 32MB. else log2(nchunks) - 16 */
+=======
 	/* Callback to mark the superblock dirty */
 	void (*markSuperBlockDirty)(struct yaffs_DeviceStruct *dev);
 	
@@ -623,22 +784,49 @@ struct yaffs_DeviceStruct {
 	__u16 chunkGroupBits;	/* Number of bits that need to be resolved if
                                  * the tnodes are not wide enough.
                                  */
+>>>>>>> origin/incrediblec-2.6.32
 	__u16 chunkGroupSize;	/* == 2^^chunkGroupBits */
 
 	/* Stuff to support wide tnodes */
 	__u32 tnodeWidth;
 	__u32 tnodeMask;
+<<<<<<< HEAD
+=======
 	__u32 tnodeSize;
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* Stuff for figuring out file offset to chunk conversions */
 	__u32 chunkShift; /* Shift value */
 	__u32 chunkDiv;   /* Divisor after shifting: 1 for power-of-2 sizes */
 	__u32 chunkMask;  /* Mask to use for power-of-2 case */
 
+<<<<<<< HEAD
+	/* Stuff to handle inband tags */
+	int inbandTags;
+	__u32 totalBytesPerChunk;
+
+#ifdef __KERNEL__
+
+	struct semaphore sem;	/* Semaphore for waiting on erasure.*/
+	struct semaphore grossLock;	/* Gross locking semaphore */
+	struct rw_semaphore dirLock; /* Lock the directory structure */
+	__u8 *spareBuffer;	/* For mtdif2 use. Don't know the size of the buffer
+				 * at compile time so we have to allocate it.
+
+				 */
+	void (*putSuperFunc) (struct super_block *sb);
+        struct ylist_head searchContexts;
+
+#endif
+
+	int isMounted;
+
+=======
 
 
 	int isMounted;
 	int readOnly;
+>>>>>>> origin/incrediblec-2.6.32
 	int isCheckpointed;
 
 
@@ -680,6 +868,53 @@ struct yaffs_DeviceStruct {
 	__u32 allocationPage;
 	int allocationBlockFinder;	/* Used to search for next allocation block */
 
+<<<<<<< HEAD
+	/* Runtime state */
+	int nTnodesCreated;
+	yaffs_Tnode *freeTnodes;
+	int nFreeTnodes;
+	yaffs_TnodeList *allocatedTnodeList;
+
+	int isDoingGC;
+	int gcBlock;
+	int gcChunk;
+
+	int nObjectsCreated;
+	yaffs_Object *freeObjects;
+	int nFreeObjects;
+
+	int nHardLinks;
+
+	yaffs_ObjectList *allocatedObjectList;
+
+	yaffs_ObjectBucket objectBucket[YAFFS_NOBJECT_BUCKETS];
+
+	int nFreeChunks;
+
+	int currentDirtyChecker;	/* Used to find current dirtiest block */
+
+	__u32 *gcCleanupList;	/* objects to delete at the end of a GC. */
+	int nonAggressiveSkip;	/* GC state/mode */
+
+	/* Statistcs */
+	int nPageWrites;
+	int nPageReads;
+	int nBlockErasures;
+	int nErasureFailures;
+	int nGCCopies;
+	int garbageCollections;
+	int passiveGarbageCollections;
+	int nRetriedWrites;
+	int nRetiredBlocks;
+	int eccFixed;
+	int eccUnfixed;
+	int tagsEccFixed;
+	int tagsEccUnfixed;
+	int nDeletions;
+	int nUnmarkedDeletions;
+
+	int hasPendingPrioritisedGCs; /* We think this device might have pending prioritised gcs */
+=======
 	/* Object and Tnode memory management */
 	void *allocator;
 	int nObjects;
@@ -705,6 +940,7 @@ struct yaffs_DeviceStruct {
 	unsigned gcBlock;
 	unsigned gcChunk;
 	unsigned gcSkip;
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* Special directories */
 	yaffs_Object *rootDir;
@@ -721,6 +957,11 @@ struct yaffs_DeviceStruct {
 	yaffs_ChunkCache *srCache;
 	int srLastUse;
 
+<<<<<<< HEAD
+	int cacheHits;
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	/* Stuff for background deletion and unlinked files.*/
 	yaffs_Object *unlinkedDir;	/* Directory where unlinked and deleted files live. */
 	yaffs_Object *deletedDir;	/* Directory where deleted objects are sent to disappear. */
@@ -729,6 +970,10 @@ struct yaffs_DeviceStruct {
 	int nUnlinkedFiles;		/* Count of unlinked files. */
 	int nBackgroundDeletions;	/* Count of background deletions. */
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	/* Temporary buffer management */
 	yaffs_TempBuffer tempBuffer[YAFFS_N_TEMP_BUFFERS];
 	int maxTemp;
@@ -739,6 +984,8 @@ struct yaffs_DeviceStruct {
 	/* yaffs2 runtime stuff */
 	unsigned sequenceNumber;	/* Sequence number of currently allocating block */
 	unsigned oldestDirtySequence;
+<<<<<<< HEAD
+=======
 	unsigned oldestDirtyBlock;
 
 	/* Block refreshing */
@@ -769,6 +1016,7 @@ struct yaffs_DeviceStruct {
 	__u32 nUnmarkedDeletions;
 	__u32 refreshCount;
 	__u32 cacheHits;
+>>>>>>> origin/incrediblec-2.6.32
 
 };
 
@@ -801,6 +1049,10 @@ typedef struct {
 
 	/* yaffs2 runtime stuff */
 	unsigned sequenceNumber;	/* Sequence number of currently allocating block */
+<<<<<<< HEAD
+	unsigned oldestDirtySequence;
+=======
+>>>>>>> origin/incrediblec-2.6.32
 
 } yaffs_CheckpointDevice;
 
@@ -813,6 +1065,8 @@ typedef struct {
 } yaffs_CheckpointValidity;
 
 
+<<<<<<< HEAD
+=======
 struct yaffs_ShadowFixerStruct {
 	int objectId;
 	int shadowedId;
@@ -830,6 +1084,7 @@ typedef struct {
 }yaffs_XAttrMod;
 
 
+>>>>>>> origin/incrediblec-2.6.32
 /*----------------------- YAFFS Functions -----------------------*/
 
 int yaffs_GutsInitialise(yaffs_Device *dev);
@@ -861,8 +1116,12 @@ int yaffs_ResizeFile(yaffs_Object *obj, loff_t newSize);
 
 yaffs_Object *yaffs_MknodFile(yaffs_Object *parent, const YCHAR *name,
 				__u32 mode, __u32 uid, __u32 gid);
+<<<<<<< HEAD
+int yaffs_FlushFile(yaffs_Object *obj, int updateTime);
+=======
 
 int yaffs_FlushFile(yaffs_Object *obj, int updateTime, int dataSync);
+>>>>>>> origin/incrediblec-2.6.32
 
 /* Flushing and checkpointing */
 void yaffs_FlushEntireDeviceCache(yaffs_Device *dev);
@@ -895,12 +1154,15 @@ YCHAR *yaffs_GetSymlinkAlias(yaffs_Object *obj);
 yaffs_Object *yaffs_MknodSpecial(yaffs_Object *parent, const YCHAR *name,
 				 __u32 mode, __u32 uid, __u32 gid, __u32 rdev);
 
+<<<<<<< HEAD
+=======
 
 int yaffs_SetXAttribute(yaffs_Object *obj, const YCHAR *name, const void * value, int size, int flags);
 int yaffs_GetXAttribute(yaffs_Object *obj, const YCHAR *name, void *value, int size);
 int yaffs_ListXAttributes(yaffs_Object *obj, char *buffer, int size);
 int yaffs_RemoveXAttribute(yaffs_Object *obj, const YCHAR *name);
 
+>>>>>>> origin/incrediblec-2.6.32
 /* Special directories */
 yaffs_Object *yaffs_Root(yaffs_Device *dev);
 yaffs_Object *yaffs_LostNFound(yaffs_Device *dev);
@@ -910,18 +1172,30 @@ yaffs_Object *yaffs_LostNFound(yaffs_Device *dev);
 void yfsd_WinFileTimeNow(__u32 target[2]);
 #endif
 
+<<<<<<< HEAD
+#ifdef __KERNEL__
+
+void yaffs_HandleDeferedFree(yaffs_Object *obj);
+#endif
+=======
 void yaffs_HandleDeferedFree(yaffs_Object *obj);
 
 void yaffs_UpdateDirtyDirectories(yaffs_Device *dev);
 
 int yaffs_BackgroundGarbageCollect(yaffs_Device *dev, unsigned urgency);
+>>>>>>> origin/incrediblec-2.6.32
 
 /* Debug dump  */
 int yaffs_DumpObject(yaffs_Object *obj);
 
 void yaffs_GutsTest(yaffs_Device *dev);
 
+<<<<<<< HEAD
+/* A few useful functions */
+void yaffs_InitialiseTags(yaffs_ExtendedTags *tags);
+=======
 /* A few useful functions to be used within the core files*/
+>>>>>>> origin/incrediblec-2.6.32
 void yaffs_DeleteChunk(yaffs_Device *dev, int chunkId, int markNAND, int lyn);
 int yaffs_CheckFF(__u8 *buffer, int nBytes);
 void yaffs_HandleChunkError(yaffs_Device *dev, yaffs_BlockInfo *bi);
@@ -929,6 +1203,8 @@ void yaffs_HandleChunkError(yaffs_Device *dev, yaffs_BlockInfo *bi);
 __u8 *yaffs_GetTempBuffer(yaffs_Device *dev, int lineNo);
 void yaffs_ReleaseTempBuffer(yaffs_Device *dev, __u8 *buffer, int lineNo);
 
+<<<<<<< HEAD
+=======
 yaffs_Object *yaffs_FindOrCreateObjectByNumber(yaffs_Device *dev,
 					        int number,
 					        yaffs_ObjectType type);
@@ -966,4 +1242,5 @@ yaffs_Tnode *yaffs_FindLevel0Tnode(yaffs_Device *dev,
 
 __u32 yaffs_GetChunkGroupBase(yaffs_Device *dev, yaffs_Tnode *tn, unsigned pos);
 
+>>>>>>> origin/incrediblec-2.6.32
 #endif

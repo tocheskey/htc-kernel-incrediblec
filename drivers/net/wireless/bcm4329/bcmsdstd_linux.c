@@ -1,7 +1,11 @@
 /*
  *  'Standard' SDIO HOST CONTROLLER driver - linux portion
  *
+<<<<<<< HEAD
+ * Copyright (C) 1999-2009, Broadcom Corporation
+=======
  * Copyright (C) 1999-2010, Broadcom Corporation
+>>>>>>> origin/incrediblec-2.6.32
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -21,7 +25,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
+ * $Id: bcmsdstd_linux.c,v 1.11.18.2 2008/05/28 18:36:56 Exp $
+=======
  * $Id: bcmsdstd_linux.c,v 1.11.18.2.16.1 2010/08/17 17:03:13 Exp $
+>>>>>>> origin/incrediblec-2.6.32
  */
 
 #include <typedefs.h>
@@ -186,9 +194,13 @@ sdstd_lock(sdioh_info_t *sd)
 
 	spin_lock_irqsave(&sdos->lock, flags);
 	if (sd->lockcount) {
+<<<<<<< HEAD
+		sd_err(("%s: Already locked!\n", __FUNCTION__));
+=======
 		sd_err(("%s: Already locked! called from %p\n",
 		       __FUNCTION__,
 		       __builtin_return_address(0)));
+>>>>>>> origin/incrediblec-2.6.32
 		ASSERT(sd->lockcount == 0);
 	}
 	sdstd_devintr_off(sd);

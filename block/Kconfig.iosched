@@ -40,6 +40,8 @@ config IOSCHED_CFQ
 	  working environment, suitable for desktop systems.
 	  This is the default I/O scheduler.
 
+<<<<<<< HEAD
+=======
 config IOSCHED_BFQ
 	tristate "BFQ I/O scheduler"
 	depends on EXPERIMENTAL
@@ -62,6 +64,7 @@ config CGROUP_BFQIO
 	  filesystem interface.  The name of the subsystem will be
 	  bfqio.
 
+>>>>>>> origin/incrediblec-2.6.32
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -78,9 +81,12 @@ choice
 	config DEFAULT_CFQ
 		bool "CFQ" if IOSCHED_CFQ=y
 
+<<<<<<< HEAD
+=======
 	config DEFAULT_BFQ
 		bool "BFQ" if IOSCHED_BFQ=y
 
+>>>>>>> origin/incrediblec-2.6.32
 	config DEFAULT_NOOP
 		bool "No-op"
 
@@ -91,7 +97,10 @@ config DEFAULT_IOSCHED
 	default "anticipatory" if DEFAULT_AS
 	default "deadline" if DEFAULT_DEADLINE
 	default "cfq" if DEFAULT_CFQ
+<<<<<<< HEAD
+=======
 	default "bfq" if DEFAULT_BFQ
+>>>>>>> origin/incrediblec-2.6.32
 	default "noop" if DEFAULT_NOOP
 
 endmenu

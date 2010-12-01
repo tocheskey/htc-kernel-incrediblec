@@ -1048,8 +1048,11 @@ config USB_S2255
 
 endif # V4L_USB_DRIVERS
 
+<<<<<<< HEAD
+=======
 endif # VIDEO_CAPTURE_DRIVERS
 
+>>>>>>> origin/incrediblec-2.6.32
 comment "Qualcomm MSM Camera And Video"
 
 menuconfig MSM_CAMERA
@@ -1059,6 +1062,12 @@ menuconfig MSM_CAMERA
 	  Say Y here to enable selecting the video adapters for
 	  Qualcomm msm camera and video encoding
 
+<<<<<<< HEAD
+source "drivers/media/video/msm/Kconfig"
+
+endif # VIDEO_CAPTURE_DRIVERS
+=======
 
 # MSM camera does not require V4L2
 source "drivers/media/video/msm/Kconfig"
+>>>>>>> origin/incrediblec-2.6.32

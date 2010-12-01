@@ -1,7 +1,11 @@
 /*
  * YAFFS: Yet another Flash File System . A NAND-flash specific file system.
  *
+<<<<<<< HEAD
+ * Copyright (C) 2002-2007 Aleph One Ltd.
+=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
+>>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Martin Fouts <Martin.Fouts@palmsource.com>
@@ -29,15 +33,23 @@
 /* Meaning: Yaffs does its own ECC, rather than using MTD ECC */
 /* #define CONFIG_YAFFS_DOES_ECC */
 
+<<<<<<< HEAD
+=======
 /* Default: Selected */
 /* Meaning: Yaffs does its own ECC on tags for packed tags rather than use mtd */
 #define CONFIG_YAFFS_DOES_TAGS_ECC
 
+>>>>>>> origin/incrediblec-2.6.32
 /* Default: Not selected */
 /* Meaning: ECC byte order is 'wrong'.  Only meaningful if */
 /*          CONFIG_YAFFS_DOES_ECC is set */
 /* #define CONFIG_YAFFS_ECC_WRONG_ORDER */
 
+<<<<<<< HEAD
+/* Default: Selected */
+/* Meaning: Disables testing whether chunks are erased before writing to them*/
+#define CONFIG_YAFFS_DISABLE_CHUNK_ERASED_CHECK
+=======
 /* Default: Not selected */
 /* Meaning: Always test whether chunks are erased before writing to them.
 	    Use during mtd debugging and init. */
@@ -48,11 +60,17 @@
 /* This is done to fix an old problem where rmdir was not checking for an */
 /* empty directory. This can also be achieved with a mount option. */
 #define CONFIG_YAFFS_EMPTY_LOST_AND_FOUND
+>>>>>>> origin/incrediblec-2.6.32
 
 /* Default: Selected */
 /* Meaning: Cache short names, taking more RAM, but faster look-ups */
 #define CONFIG_YAFFS_SHORT_NAMES_IN_RAM
 
+<<<<<<< HEAD
+/* Default: 10 */
+/* Meaning: set the count of blocks to reserve for checkpointing */
+#define CONFIG_YAFFS_CHECKPOINT_RESERVED_BLOCKS 10
+=======
 /* Default: Unselected */
 /* Meaning: Select to disable block refreshing. */
 /* Block Refreshing periodically rewrites the oldest block. */
@@ -66,6 +84,7 @@
 /* Default: Selected */
 /* Meaning: Enable XATTR support */
 #define CONFIG_YAFFS_XATTR
+>>>>>>> origin/incrediblec-2.6.32
 
 /*
 Older-style on-NAND data format has a "pageStatus" byte to record

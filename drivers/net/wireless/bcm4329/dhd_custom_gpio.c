@@ -20,7 +20,11 @@
 * software in any way with any other Broadcom software provided under a license
 * other than the GPL, without Broadcom's express prior written consent.
 *
+<<<<<<< HEAD
+* $Id: dhd_custom_gpio.c,v 1.1.4.6 2010/02/19 22:56:49 Exp $
+=======
 * $Id: dhd_custom_gpio.c,v 1.1.4.7 2010/06/03 21:27:48 Exp $
+>>>>>>> origin/incrediblec-2.6.32
 */
 
 
@@ -42,11 +46,18 @@
 extern  void bcm_wlan_power_off(int);
 extern  void bcm_wlan_power_on(int);
 #endif /* CUSTOMER_HW */
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 #ifdef CUSTOMER_HW2
 int wifi_set_carddetect(int on);
 int wifi_set_power(int on, unsigned long msec);
 int wifi_get_irq_number(unsigned long *irq_flags_ptr);
+<<<<<<< HEAD
+=======
 int wifi_get_mac_addr(unsigned char *buf);
+>>>>>>> origin/incrediblec-2.6.32
 #endif
 
 #if defined(OOB_INTR_ONLY)
@@ -55,10 +66,13 @@ int wifi_get_mac_addr(unsigned char *buf);
 extern int sdioh_mmc_irq(int irq);
 #endif /* (BCMLXSDMMC)  */
 
+<<<<<<< HEAD
+=======
 #ifdef CUSTOMER_HW3
 #include <mach/gpio.h>
 #endif
 
+>>>>>>> origin/incrediblec-2.6.32
 /* Customer specific Host GPIO defintion  */
 static int dhd_oob_gpio_num = -1; /* GG 19 */
 
@@ -67,12 +81,19 @@ MODULE_PARM_DESC(dhd_oob_gpio_num, "DHD oob gpio number");
 
 int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr)
 {
+<<<<<<< HEAD
+	int  host_oob_irq;
+#ifdef CUSTOMER_HW2
+	host_oob_irq = wifi_get_irq_number(irq_flags_ptr);
+#else
+=======
 	int  host_oob_irq = 0;
 
 #ifdef CUSTOMER_HW2
 	host_oob_irq = wifi_get_irq_number(irq_flags_ptr);
 
 #else /* for NOT  CUSTOMER_HW2 */
+>>>>>>> origin/incrediblec-2.6.32
 #if defined(CUSTOM_OOB_GPIO_NUM)
 	if (dhd_oob_gpio_num < 0) {
 		dhd_oob_gpio_num = CUSTOM_OOB_GPIO_NUM;
@@ -81,13 +102,21 @@ int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr)
 	*irq_flags_ptr = IRQF_TRIGGER_FALLING;
 	if (dhd_oob_gpio_num < 0) {
 		WL_ERROR(("%s: ERROR customer specific Host GPIO is NOT defined \n",
+<<<<<<< HEAD
+			             __FUNCTION__));
+=======
 			__FUNCTION__));
+>>>>>>> origin/incrediblec-2.6.32
 		return (dhd_oob_gpio_num);
 	}
 
 	WL_ERROR(("%s: customer specific Host GPIO number is (%d)\n",
 	         __FUNCTION__, dhd_oob_gpio_num));
 
+<<<<<<< HEAD
+	host_oob_irq = sdioh_mmc_irq(dhd_oob_gpio_num);
+#endif
+=======
 #if defined CUSTOMER_HW
 	host_oob_irq = MSM_GPIO_TO_INT(dhd_oob_gpio_num);
 #elif defined CUSTOMER_HW3
@@ -97,6 +126,7 @@ int dhd_customer_oob_irq_map(unsigned long *irq_flags_ptr)
 #endif /* CUSTOMER_HW */
 #endif /* CUSTOMER_HW2 */
 
+>>>>>>> origin/incrediblec-2.6.32
 	return (host_oob_irq);
 }
 #endif /* defined(OOB_INTR_ONLY) */
@@ -143,6 +173,14 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 				__FUNCTION__));
 #ifdef CUSTOMER_HW
 			bcm_wlan_power_on(1);
+<<<<<<< HEAD
+#endif /* CUSTOMER_HW */
+			/* Lets customer power to get stable */
+			OSL_DELAY(500);
+		break;
+	}
+}
+=======
 			/* Lets customer power to get stable */
 			OSL_DELAY(50);
 #endif /* CUSTOMER_HW */
@@ -177,3 +215,4 @@ dhd_custom_get_mac_address(unsigned char *buf)
 	return ret;
 }
 #endif /* GET_CUSTOM_MAC_ENABLE */
+>>>>>>> origin/incrediblec-2.6.32

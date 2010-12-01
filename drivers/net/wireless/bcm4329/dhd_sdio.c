@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
+ * $Id: dhd_sdio.c,v 1.157.2.27.2.33.2.109 2010/04/22 05:52:46 Exp $
+=======
  * $Id: dhd_sdio.c,v 1.157.2.27.2.33.2.129 2010/08/19 20:36:22 Exp $
+>>>>>>> origin/incrediblec-2.6.32
  */
 
 #include <typedefs.h>
@@ -36,11 +40,22 @@
 #include <bcmutils.h>
 #include <bcmendian.h>
 #include <bcmdevs.h>
+<<<<<<< HEAD
+
+#include <siutils.h>
+#include <hndpmu.h>
+#include <hndsoc.h>
+#include <hndrte_armtrap.h>
+#include <sbchipc.h>
+#include <sbhnddma.h>
+
+=======
 #include <siutils.h>
 #include <hndpmu.h>
 #include <hndsoc.h>
 #include <sbchipc.h>
 #include <sbhnddma.h>
+>>>>>>> origin/incrediblec-2.6.32
 #include <sdio.h>
 #include <sbsdio.h>
 #include <sbsdpcmdev.h>
@@ -58,6 +73,8 @@
 #include <dhdioctl.h>
 #include <sdiovar.h>
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 #include <hndrte_cons.h>
 #endif /* DHD_DEBUG */
@@ -65,6 +82,7 @@
 #include <hndrte_armtrap.h>
 #endif /* DHD_DEBUG_TRAP */
 
+>>>>>>> origin/incrediblec-2.6.32
 #define QLEN		256	/* bulk rx and tx queue lengths */
 #define FCHI		(QLEN - 10)
 #define FCLOW		(FCHI / 2)
@@ -124,11 +142,19 @@
 /* Bump up limit on waiting for HT to account for first startup;
  * if the image is doing a CRC calculation before programming the PMU
  * for HT availability, it could take a couple hundred ms more, so
+<<<<<<< HEAD
+ * max out at a half second (500000us).
+ */
+#if (PMU_MAX_TRANSITION_DLY <= 500000)
+#undef PMU_MAX_TRANSITION_DLY
+#define PMU_MAX_TRANSITION_DLY 500000
+=======
  * max out at a 1 second (1000000us).
  */
 #if (PMU_MAX_TRANSITION_DLY < 1000000)
 #undef PMU_MAX_TRANSITION_DLY
 #define PMU_MAX_TRANSITION_DLY 1000000
+>>>>>>> origin/incrediblec-2.6.32
 #endif
 
 /* Value for ChipClockCSR during initial setup */
@@ -146,6 +172,8 @@
 DHD_SPINWAIT_SLEEP_INIT(sdioh_spinwait_sleep);
 extern int dhdcdc_set_ioctl(dhd_pub_t *dhd, int ifidx, uint cmd, void *buf, uint len);
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 /* Device console log buffer state */
 typedef struct dhd_console {
@@ -157,6 +185,7 @@ typedef struct dhd_console {
 	uint		last;			/* Last buffer read index */
 } dhd_console_t;
 #endif /* DHD_DEBUG */
+>>>>>>> origin/incrediblec-2.6.32
 
 /* Private data for SDIO bus interaction */
 typedef struct dhd_bus {
@@ -224,10 +253,13 @@ typedef struct dhd_bus {
 	uint		polltick;		/* Tick counter */
 	uint		pollcnt;		/* Count of active polls */
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 	dhd_console_t	console;		/* Console output polling support */
 	uint		console_addr;		/* Console address from shared struct */
 #endif /* DHD_DEBUG */
+>>>>>>> origin/incrediblec-2.6.32
 
 	uint		regfails;		/* Count of R_REG/W_REG failures */
 
@@ -424,10 +456,14 @@ static void dhdsdio_testrcv(dhd_bus_t *bus, void *pkt, uint seq);
 static void dhdsdio_sdtest_set(dhd_bus_t *bus, bool start);
 #endif
 
+<<<<<<< HEAD
+static int dhdsdio_checkdied(dhd_bus_t *bus, uint8 *data, uint size);
+=======
 #ifdef DHD_DEBUG_TRAP
 static int dhdsdio_checkdied(dhd_bus_t *bus, uint8 *data, uint size);
 static int dhdsdio_mem_dump(dhd_bus_t *bus);
 #endif /* DHD_DEBUG_TRAP */
+>>>>>>> origin/incrediblec-2.6.32
 static int dhdsdio_download_state(dhd_bus_t *bus, bool enter);
 
 static void dhdsdio_release(dhd_bus_t *bus, osl_t *osh);
@@ -953,6 +989,10 @@ dhdsdio_txpkt(dhd_bus_t *bus, void *pkt, uint chan, bool free_pkt)
 	        (((pad + SDPCM_HDRLEN) << SDPCM_DOFFSET_SHIFT) & SDPCM_DOFFSET_MASK);
 	htol32_ua_store(swheader, frame + SDPCM_FRAMETAG_LEN);
 	htol32_ua_store(0, frame + SDPCM_FRAMETAG_LEN + sizeof(swheader));
+<<<<<<< HEAD
+	bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
+=======
+>>>>>>> origin/incrediblec-2.6.32
 
 #ifdef DHD_DEBUG
 	tx_packets[PKTPRIO(pkt)]++;
@@ -1018,9 +1058,12 @@ dhdsdio_txpkt(dhd_bus_t *bus, void *pkt, uint chan, bool free_pkt)
 			}
 
 		}
+<<<<<<< HEAD
+=======
 		if (ret == 0) {
 			bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
 		}
+>>>>>>> origin/incrediblec-2.6.32
 	} while ((ret < 0) && retrydata && retries++ < TXRETRIES);
 
 done:
@@ -1072,7 +1115,11 @@ dhd_bus_txdata(struct dhd_bus *bus, void *pkt)
 	/* Check for existing queue, current flow-control, pending event, or pending clock */
 	if (dhd_deferred_tx || bus->fcstate || pktq_len(&bus->txq) || bus->dpc_sched ||
 	    (!DATAOK(bus)) || (bus->flowcontrol & NBITVAL(prec)) ||
+<<<<<<< HEAD
+	    (bus->clkstate == CLK_PENDING)) {
+=======
 	    (bus->clkstate != CLK_AVAIL)) {
+>>>>>>> origin/incrediblec-2.6.32
 		DHD_TRACE(("%s: deferring pktq len %d\n", __FUNCTION__,
 			pktq_len(&bus->txq)));
 		bus->fcqueued++;
@@ -1108,7 +1155,10 @@ dhd_bus_txdata(struct dhd_bus *bus, void *pkt)
 
 		/* Otherwise, send it now */
 		BUS_WAKE(bus);
+<<<<<<< HEAD
+=======
 		/* Make sure back plane ht clk is on, no pending allowed */
+>>>>>>> origin/incrediblec-2.6.32
 		dhdsdio_clkctl(bus, CLK_AVAIL, TRUE);
 
 #ifndef SDTEST
@@ -1263,8 +1313,11 @@ dhd_bus_txctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 	htol32_ua_store(0, frame + SDPCM_FRAMETAG_LEN + sizeof(swheader));
 
 	if (!DATAOK(bus)) {
+<<<<<<< HEAD
+=======
 		DHD_INFO(("%s: No bus credit bus->tx_max %d, bus->tx_seq %d\n",
 			__FUNCTION__, bus->tx_max, bus->tx_seq));
+>>>>>>> origin/incrediblec-2.6.32
 		bus->ctrl_frame_stat = TRUE;
 		/* Send from dpc */
 		bus->ctrl_frame_buf = frame;
@@ -1272,6 +1325,17 @@ dhd_bus_txctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 
 		dhd_wait_for_event(bus->dhd, &bus->ctrl_frame_stat);
 
+<<<<<<< HEAD
+		if (bus->ctrl_frame_stat == FALSE)
+			ret = 0;
+		else
+			ret = -1;
+	}
+
+	if (ret == -1) {
+		bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
+
+=======
 		if (bus->ctrl_frame_stat == FALSE) {
 			DHD_INFO(("%s: ctrl_frame_stat == FALSE\n", __FUNCTION__));
 			ret = 0;
@@ -1282,6 +1346,7 @@ dhd_bus_txctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 	}
 
 	if (ret == -1) {
+>>>>>>> origin/incrediblec-2.6.32
 #ifdef DHD_DEBUG
 		if (DHD_BYTES_ON() && DHD_CTL_ON()) {
 			prhex("Tx Frame", frame, len);
@@ -1291,7 +1356,10 @@ dhd_bus_txctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 #endif
 
 		do {
+<<<<<<< HEAD
+=======
 			bus->ctrl_frame_stat = FALSE;
+>>>>>>> origin/incrediblec-2.6.32
 			ret = dhd_bcmsdh_send_buf(bus, bcmsdh_cur_sbwad(sdh), SDIO_FUNC_2, F2SYNC,
 			                          frame, len, NULL, NULL, NULL);
 			ASSERT(ret != BCME_PENDING);
@@ -1320,9 +1388,12 @@ dhd_bus_txctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 				}
 
 			}
+<<<<<<< HEAD
+=======
 			if (ret == 0) {
 				bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
 			}
+>>>>>>> origin/incrediblec-2.6.32
 		} while ((ret < 0) && retries++ < TXRETRIES);
 	}
 
@@ -1367,21 +1438,33 @@ dhd_bus_rxctl(struct dhd_bus *bus, uchar *msg, uint msglen)
 		         __FUNCTION__, rxlen, msglen));
 	} else if (timeleft == 0) {
 		DHD_ERROR(("%s: resumed on timeout\n", __FUNCTION__));
+<<<<<<< HEAD
+		dhd_os_sdlock(bus->dhd);
+		dhdsdio_checkdied(bus, NULL, 0);
+		dhd_os_sdunlock(bus->dhd);
+=======
 #ifdef DHD_DEBUG_TRAP
 		dhd_os_sdlock(bus->dhd);
 		dhdsdio_checkdied(bus, NULL, 0);
 		dhd_os_sdunlock(bus->dhd);
 #endif /* DHD_DEBUG_TRAP */
+>>>>>>> origin/incrediblec-2.6.32
 	} else if (pending == TRUE) {
 		DHD_CTL(("%s: cancelled\n", __FUNCTION__));
 		return -ERESTARTSYS;
 	} else {
 		DHD_CTL(("%s: resumed for unknown reason?\n", __FUNCTION__));
+<<<<<<< HEAD
+		dhd_os_sdlock(bus->dhd);
+		dhdsdio_checkdied(bus, NULL, 0);
+		dhd_os_sdunlock(bus->dhd);
+=======
 #ifdef DHD_DEBUG_TRAP
 		dhd_os_sdlock(bus->dhd);
 		dhdsdio_checkdied(bus, NULL, 0);
 		dhd_os_sdunlock(bus->dhd);
 #endif /* DHD_DEBUG_TRAP */
+>>>>>>> origin/incrediblec-2.6.32
 	}
 
 	if (rxlen)
@@ -1401,9 +1484,13 @@ enum {
 	IOV_SDCIS,
 	IOV_MEMBYTES,
 	IOV_MEMSIZE,
+<<<<<<< HEAD
+	IOV_CHECKDIED,
+=======
 #ifdef DHD_DEBUG_TRAP
 	IOV_CHECKDIED,
 #endif
+>>>>>>> origin/incrediblec-2.6.32
 	IOV_DOWNLOAD,
 	IOV_FORCEEVEN,
 	IOV_SDIOD_DRIVE,
@@ -1454,10 +1541,15 @@ const bcm_iovar_t dhdsdio_iovars[] = {
 	{"rxbound",	IOV_RXBOUND,	0,	IOVT_UINT32,	0 },
 	{"txminmax", IOV_TXMINMAX,	0,	IOVT_UINT32,	0 },
 	{"cpu",		IOV_CPU,	0,	IOVT_BOOL,	0 },
+<<<<<<< HEAD
+	{"checkdied",	IOV_CHECKDIED,	0,	IOVT_BUFFER,	0 },
+#endif /* DHD_DEBUG */
+=======
 #endif /* DHD_DEBUG */
 #ifdef DHD_DEBUG_TRAP
 	{"checkdied",	IOV_CHECKDIED,	0,	IOVT_BUFFER,	0 },
 #endif /* DHD_DEBUG_TRAP  */
+>>>>>>> origin/incrediblec-2.6.32
 #ifdef SDTEST
 	{"extloop",	IOV_EXTLOOP,	0,	IOVT_BOOL,	0 },
 	{"pktgen",	IOV_PKTGEN,	0,	IOVT_BUFFER,	sizeof(dhd_pktgen_t) },
@@ -1686,7 +1778,10 @@ xfer_done:
 	return bcmerror;
 }
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG_TRAP
+>>>>>>> origin/incrediblec-2.6.32
 static int
 dhdsdio_readshared(dhd_bus_t *bus, sdpcm_shared_t *sh)
 {
@@ -1839,11 +1934,14 @@ dhdsdio_checkdied(dhd_bus_t *bus, uint8 *data, uint size)
 		DHD_ERROR(("%s: %s\n", __FUNCTION__, strbuf.origbuf));
 	}
 
+<<<<<<< HEAD
+=======
 	if (sdpcm_shared.flags & SDPCM_SHARED_TRAP) {
 			/* Mem dump to a file on device */
 			dhdsdio_mem_dump(bus);
 	}
 
+>>>>>>> origin/incrediblec-2.6.32
 done:
 	if (mbuffer)
 		MFREE(bus->dhd->osh, mbuffer, msize);
@@ -1853,6 +1951,8 @@ done:
 	return bcmerror;
 }
 
+<<<<<<< HEAD
+=======
 static int
 dhdsdio_mem_dump(dhd_bus_t *bus)
 {
@@ -1982,6 +2082,7 @@ break2:
 }
 #endif /* DHD_DEBUG */
 
+>>>>>>> origin/incrediblec-2.6.32
 int
 dhdsdio_downloadvars(dhd_bus_t *bus, void *arg, int len)
 {
@@ -4229,7 +4330,11 @@ clkwait:
 		bcmsdh_intr_enable(sdh);
 	}
 
+<<<<<<< HEAD
+	if (DATAOK(bus) && bus->ctrl_frame_stat) {
+=======
 	if (DATAOK(bus) && bus->ctrl_frame_stat && (bus->clkstate == CLK_AVAIL)) {
+>>>>>>> origin/incrediblec-2.6.32
 		int ret, i;
 
 		ret = dhd_bcmsdh_send_buf(bus, bcmsdh_cur_sbwad(sdh), SDIO_FUNC_2, F2SYNC,
@@ -4261,16 +4366,25 @@ clkwait:
 			}
 
 		}
+<<<<<<< HEAD
+		printf("Return_dpc value is : %d\n", ret);
+		bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
+=======
 		if (ret == 0) {
 				bus->tx_seq = (bus->tx_seq + 1) % SDPCM_SEQUENCE_WRAP;
 		}
 
 		printf("Return_dpc value is : %d\n", ret);
+>>>>>>> origin/incrediblec-2.6.32
 		bus->ctrl_frame_stat = FALSE;
 		dhd_wait_event_wakeup(bus->dhd);
 	}
 	/* Send queued frames (limit 1 if rx may still be pending) */
+<<<<<<< HEAD
+	else if ((bus->clkstate != CLK_PENDING) && !bus->fcstate &&
+=======
 	else if ((bus->clkstate == CLK_AVAIL) && !bus->fcstate &&
+>>>>>>> origin/incrediblec-2.6.32
 	    pktq_mlen(&bus->txq, ~bus->flowcontrol) && txlimit && DATAOK(bus)) {
 		framecnt = rxdone ? txlimit : MIN(txlimit, dhd_txminmax);
 		framecnt = dhdsdio_sendfromq(bus, framecnt);
@@ -4285,9 +4399,13 @@ clkwait:
 		bus->dhd->busstate = DHD_BUS_DOWN;
 		bus->intstatus = 0;
 	} else if (bus->clkstate == CLK_PENDING) {
+<<<<<<< HEAD
+		/* Awaiting I_CHIPACTIVE; don't resched */
+=======
 		DHD_INFO(("%s: rescheduled due to CLK_PENDING awaiting \
 			I_CHIPACTIVE interrupt", __FUNCTION__));
 			resched = TRUE;
+>>>>>>> origin/incrediblec-2.6.32
 	} else if (bus->intstatus || bus->ipend ||
 	           (!bus->fcstate && pktq_mlen(&bus->txq, ~bus->flowcontrol) && DATAOK(bus)) ||
 			PKT_AVAILABLE()) {  /* Read multiple frames */
@@ -4311,6 +4429,10 @@ clkwait:
 bool
 dhd_bus_dpc(struct dhd_bus *bus)
 {
+<<<<<<< HEAD
+#ifdef SDIO_ISR_THREAD
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	bool resched;
 
 	/* Call the DPC directly. */
@@ -4318,6 +4440,12 @@ dhd_bus_dpc(struct dhd_bus *bus)
 	resched = dhdsdio_dpc(bus);
 
 	return resched;
+<<<<<<< HEAD
+#else
+	return dhdsdio_dpc(bus);
+#endif /* SDIO_ISR_THREAD */
+=======
+>>>>>>> origin/incrediblec-2.6.32
 }
 
 void
@@ -4326,8 +4454,11 @@ dhdsdio_isr(void *arg)
 	dhd_bus_t *bus = (dhd_bus_t*)arg;
 	bcmsdh_info_t *sdh;
 
+<<<<<<< HEAD
+=======
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
+>>>>>>> origin/incrediblec-2.6.32
 	if (!bus) {
 		DHD_ERROR(("%s : bus is null pointer , exit \n", __FUNCTION__));
 		return;
@@ -4338,6 +4469,12 @@ dhdsdio_isr(void *arg)
 		DHD_ERROR(("%s : bus is down. we have nothing to do\n", __FUNCTION__));
 		return;
 	}
+<<<<<<< HEAD
+
+	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	/* Count the interrupt call */
 	bus->intrcount++;
 	bus->ipend = TRUE;
@@ -4664,6 +4801,8 @@ dhd_bus_watchdog(dhd_pub_t *dhdp)
 		bus->lastintrs = bus->intrcount;
 	}
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 	/* Poll for console output periodically */
 	if (dhdp->busstate == DHD_BUS_DATA && dhd_console_ms != 0) {
@@ -4677,6 +4816,7 @@ dhd_bus_watchdog(dhd_pub_t *dhdp)
 		}
 	}
 #endif /* DHD_DEBUG */
+>>>>>>> origin/incrediblec-2.6.32
 
 #ifdef SDTEST
 	/* Generate packets if configured */
@@ -4694,6 +4834,10 @@ dhd_bus_watchdog(dhd_pub_t *dhdp)
 			bus->idlecount = 0;
 			if (bus->activity) {
 				bus->activity = FALSE;
+<<<<<<< HEAD
+			} else {
+=======
+>>>>>>> origin/incrediblec-2.6.32
 				dhdsdio_clkctl(bus, CLK_NONE, FALSE);
 			}
 		}
@@ -4704,6 +4848,8 @@ dhd_bus_watchdog(dhd_pub_t *dhdp)
 	return bus->ipend;
 }
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 extern int
 dhd_bus_console_in(dhd_pub_t *dhdp, uchar *msg, uint msglen)
@@ -4766,6 +4912,7 @@ done:
 	return rv;
 }
 #endif /* DHD_DEBUG */
+>>>>>>> origin/incrediblec-2.6.32
 
 #ifdef DHD_DEBUG
 static void

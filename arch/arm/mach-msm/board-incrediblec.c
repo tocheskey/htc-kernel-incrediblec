@@ -64,7 +64,10 @@
 #include <mach/vreg.h>
 /* #include <mach/pmic.h> */
 #include <mach/msm_hsusb.h>
+<<<<<<< HEAD
+=======
 #include <mach/bcm_bt_lpm.h>
+>>>>>>> origin/incrediblec-2.6.32
 
 #define SMEM_SPINLOCK_I2C      6
 #define INCREDIBLEC_MICROP_VER		0x04
@@ -716,7 +719,11 @@ static struct regulator_init_data tps65023_data[5] = {
 	{
 		.constraints = {
 			.name = "dcdc1", /* VREG_MSMC2_1V29 */
+<<<<<<< HEAD
+			.min_uV = 1000000,
+=======
 			.min_uV = 950000,
+>>>>>>> origin/incrediblec-2.6.32
 			.max_uV = 1300000,
 			.valid_ops_mask = REGULATOR_CHANGE_VOLTAGE,
 		},
@@ -1394,6 +1401,11 @@ static struct platform_device sonywvga_panel = {
 		.platform_data = &sonywvga_data,
 	},
 };
+<<<<<<< HEAD
+static struct platform_device *devices[] __initdata = {
+	&msm_device_uart1,
+#ifdef CONFIG_SERIAL_MSM_HS
+=======
 
 static struct msm_serial_hs_platform_data msm_uart_dm1_pdata = {
         .rx_wakeup_irq = -1,
@@ -1420,6 +1432,7 @@ static struct platform_device *devices[] __initdata = {
 	&msm_device_uart1,
 #ifdef CONFIG_SERIAL_MSM_HS
 	&bcm_bt_lpm_device,
+>>>>>>> origin/incrediblec-2.6.32
 	&msm_device_uart_dm1,
 #endif
 	&htc_battery_pdev,
@@ -1513,6 +1526,23 @@ static struct perflock_platform_data incrediblec_perflock_data = {
 
 int incrediblec_init_mmc(int sysrev);
 
+<<<<<<< HEAD
+#ifdef CONFIG_SERIAL_MSM_HS
+static struct msm_serial_hs_platform_data msm_uart_dm1_pdata = {
+	.rx_wakeup_irq = MSM_GPIO_TO_INT(INCREDIBLEC_GPIO_BT_HOST_WAKE),	/*Chip to Device*/
+	.inject_rx_on_wakeup = 0,
+	.cpu_lock_supported = 0,
+
+	/* for bcm */
+	.bt_wakeup_pin_supported = 1,
+	.bt_wakeup_pin = INCREDIBLEC_GPIO_BT_CHIP_WAKE,
+	.host_wakeup_pin = INCREDIBLEC_GPIO_BT_HOST_WAKE,
+
+};
+#endif
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 static int OJ_BMA_power(void)
 {
 	int ret;
@@ -1635,7 +1665,11 @@ static void __init incrediblec_init(void)
 
 	#ifdef CONFIG_SERIAL_MSM_HS
 	msm_device_uart_dm1.dev.platform_data = &msm_uart_dm1_pdata;
+<<<<<<< HEAD
+	msm_device_uart_dm1.name = "msm_serial_hs_bcm";	/* for bcm */
+=======
 	msm_device_uart_dm1.name = "msm_serial_hs";	/* for bcm */
+>>>>>>> origin/incrediblec-2.6.32
 	#endif
 
 	incrediblec_config_uart_gpios();

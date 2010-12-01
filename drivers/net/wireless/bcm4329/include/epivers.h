@@ -31,12 +31,25 @@
 
 #define	EPI_MINOR_VERSION	218
 
+<<<<<<< HEAD
+#define	EPI_RC_NUMBER		223
+=======
 #define	EPI_RC_NUMBER		248
+>>>>>>> origin/incrediblec-2.6.32
 
 #define	EPI_INCREMENTAL_NUMBER	0
 
 #define	EPI_BUILD_NUMBER	0
 
+<<<<<<< HEAD
+#define	EPI_VERSION		4, 218, 223, 0
+
+#define	EPI_VERSION_NUM		0x04dadf00
+
+
+#define	EPI_VERSION_STR		"4.218.223.0"
+#define	EPI_ROUTER_VERSION_STR	"4.219.223.0"
+=======
 #define	EPI_VERSION		4, 218, 248, 0
 
 #define	EPI_VERSION_NUM		0x04daf800
@@ -44,5 +57,6 @@
 
 #define	EPI_VERSION_STR		"4.218.248.0"
 #define	EPI_ROUTER_VERSION_STR	"4.219.248.0"
+>>>>>>> origin/incrediblec-2.6.32
 
 #endif 

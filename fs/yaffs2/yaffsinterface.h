@@ -1,7 +1,11 @@
 /*
  * YAFFS: Yet another Flash File System . A NAND-flash specific file system.
  *
+<<<<<<< HEAD
+ * Copyright (C) 2002-2007 Aleph One Ltd.
+=======
  * Copyright (C) 2002-2010 Aleph One Ltd.
+>>>>>>> origin/incrediblec-2.6.32
  *   for Toby Churchill Ltd and Brightstar Engineering
  *
  * Created by Charles Manning <charles@aleph1.co.uk>

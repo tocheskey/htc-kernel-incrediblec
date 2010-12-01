@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
+ * $Id: bcmsdh_linux.c,v 1.42.10.10.2.12 2010/03/10 03:09:48 Exp $
+=======
  * $Id: bcmsdh_linux.c,v 1.42.10.10.2.14 2010/08/17 16:34:23 Exp $
+>>>>>>> origin/incrediblec-2.6.32
  */
 
 /**
@@ -75,8 +79,12 @@ struct bcmsdh_hc {
 	bcmsdh_info_t *sdh;		/* SDIO Host Controller handle */
 	void *ch;
 	unsigned int oob_irq;
+<<<<<<< HEAD
+	unsigned long oob_flags;
+=======
 	unsigned long oob_flags; /* OOB Host specifiction as edge and etc */
 	bool oob_irq_registered;
+>>>>>>> origin/incrediblec-2.6.32
 };
 static bcmsdh_hc_t *sdhcinfo = NULL;
 
@@ -226,7 +234,10 @@ int bcmsdh_probe(struct device *dev)
 	sdhc->sdh = sdh;
 	sdhc->oob_irq = irq;
 	sdhc->oob_flags = irq_flags;
+<<<<<<< HEAD
+=======
 	sdhc->oob_irq_registered = FALSE;	/* to make sure.. */
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* chain SDIO Host Controller info together */
 	sdhc->next = sdhcinfo;
@@ -340,7 +351,11 @@ extern uint sd_pci_slot;	/* Force detection to a particular PCI */
 				/* slot only . Allows for having multiple */
 				/* WL devices at once in a PC */
 				/* Only one instance of dhd will be */
+<<<<<<< HEAD
+				/* useable at a time */
+=======
 				/* usable at a time */
+>>>>>>> origin/incrediblec-2.6.32
 				/* Upper word is bus number, */
 				/* lower word is slot number */
 				/* Default value of 0xFFFFffff turns this */
@@ -367,6 +382,22 @@ bcmsdh_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		if (pdev->bus->number != (sd_pci_slot>>16) ||
 			PCI_SLOT(pdev->devfn) != (sd_pci_slot&0xffff)) {
 			SDLX_MSG(("%s: %s: bus %X, slot %X, vend %X, dev %X\n",
+<<<<<<< HEAD
+				__FUNCTION__,
+				bcmsdh_chipmatch(pdev->vendor, pdev->device)
+				? "Found compatible SDIOHC"
+				: "Probing unknown device",
+				pdev->bus->number, PCI_SLOT(pdev->devfn), pdev->vendor,
+				pdev->device));
+			return -ENODEV;
+		}
+		SDLX_MSG(("%s: %s: bus %X, slot %X, vendor %X, device %X (good PCI location)\n",
+			__FUNCTION__,
+			bcmsdh_chipmatch(pdev->vendor, pdev->device)
+			? "Using compatible SDIOHC"
+			: "WARNING, forced use of unkown device",
+			pdev->bus->number, PCI_SLOT(pdev->devfn), pdev->vendor, pdev->device));
+=======
 			          __FUNCTION__,
 			          bcmsdh_chipmatch(pdev->vendor, pdev->device) ?
 			          "Found compatible SDIOHC" :
@@ -382,6 +413,7 @@ bcmsdh_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		          "WARNING, forced use of unkown device",
 		          pdev->bus->number, PCI_SLOT(pdev->devfn),
 		          pdev->vendor, pdev->device));
+>>>>>>> origin/incrediblec-2.6.32
 	}
 
 	if ((pdev->vendor == VENDOR_TI) && ((pdev->device == PCIXX21_FLASHMEDIA_ID) ||
@@ -442,7 +474,11 @@ bcmsdh_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	pci_set_master(pdev);
 	rc = pci_enable_device(pdev);
 	if (rc) {
+<<<<<<< HEAD
+		SDLX_MSG(("%s: Cannot enble PCI device\n", __FUNCTION__));
+=======
 		SDLX_MSG(("%s: Cannot enable PCI device\n", __FUNCTION__));
+>>>>>>> origin/incrediblec-2.6.32
 		goto err;
 	}
 	if (!(sdh = bcmsdh_attach(osh, (void *)(uintptr)pci_resource_start(pdev, 0),
@@ -595,6 +631,16 @@ int bcmsdh_register_oob_intr(void * dhdp)
 
 	dev_set_drvdata(sdhcinfo->dev, dhdp);
 
+<<<<<<< HEAD
+	/* Refer to customer Host IRQ docs about proper irqflags definition */
+	error = request_irq(sdhcinfo->oob_irq, wlan_oob_irq, sdhcinfo->oob_flags,
+		"bcmsdh_sdmmc", NULL);
+
+	if (error)
+		return -ENODEV;
+
+	set_irq_wake(sdhcinfo->oob_irq, 1);
+=======
 	if (!sdhcinfo->oob_irq_registered) {
 		/* Refer to customer Host IRQ docs about proper irqflags definition */
 		error = request_irq(sdhcinfo->oob_irq, wlan_oob_irq, sdhcinfo->oob_flags,
@@ -605,6 +651,7 @@ int bcmsdh_register_oob_intr(void * dhdp)
 		set_irq_wake(sdhcinfo->oob_irq, 1);
 		sdhcinfo->oob_irq_registered = TRUE;
 	}
+>>>>>>> origin/incrediblec-2.6.32
 
 	return 0;
 }
@@ -616,7 +663,10 @@ void bcmsdh_unregister_oob_intr(void)
 	set_irq_wake(sdhcinfo->oob_irq, 0);
 	disable_irq(sdhcinfo->oob_irq);	/* just in case.. */
 	free_irq(sdhcinfo->oob_irq, NULL);
+<<<<<<< HEAD
+=======
 	sdhcinfo->oob_irq_registered = FALSE;
+>>>>>>> origin/incrediblec-2.6.32
 }
 
 void bcmsdh_oob_intr_set(bool enable)

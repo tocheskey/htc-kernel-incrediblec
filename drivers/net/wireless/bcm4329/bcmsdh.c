@@ -40,7 +40,13 @@
 
 #include <sdio.h>	/* sdio spec */
 
+<<<<<<< HEAD
+/* Defines number of access retries to configuration registers */
 #define SDIOH_API_ACCESS_RETRY_LIMIT	2
+
+=======
+#define SDIOH_API_ACCESS_RETRY_LIMIT	2
+>>>>>>> origin/incrediblec-2.6.32
 const uint bcmsdh_msglevel = BCMSDH_ERROR_VAL;
 
 

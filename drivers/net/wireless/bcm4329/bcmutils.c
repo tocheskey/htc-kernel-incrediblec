@@ -20,7 +20,11 @@
  *      Notwithstanding the above, under no circumstances may you combine this
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
+<<<<<<< HEAD
+ * $Id: bcmutils.c,v 1.210.4.5.2.4.6.17 2009/11/17 02:20:12 Exp $
+=======
  * $Id: bcmutils.c,v 1.210.4.5.2.4.6.19 2010/04/26 06:05:25 Exp $
+>>>>>>> origin/incrediblec-2.6.32
  */
 
 #include <typedefs.h>

@@ -90,6 +90,25 @@ config YAFFS_AUTO_YAFFS2
 
 	  If unsure, say Y.
 
+<<<<<<< HEAD
+config YAFFS_DISABLE_LAZY_LOAD
+	bool "Disable lazy loading"
+	depends on YAFFS_YAFFS2
+	default n
+	help
+	  "Lazy loading" defers loading file details until they are
+	  required. This saves mount time, but makes the first look-up
+	  a bit longer.
+
+	  Lazy loading will only happen if enabled by this option being 'n'
+	  and if the appropriate tags are available, else yaffs2 will
+	  automatically fall back to immediate loading and do the right
+	  thing.
+
+	  Lazy laoding will be required by checkpointing.
+
+	  Setting this to 'y' will disable lazy loading.
+=======
 config YAFFS_DISABLE_TAGS_ECC
 	bool "Disable YAFFS from doing ECC on tags by default"
 	depends on YAFFS_FS && YAFFS_YAFFS2
@@ -99,6 +118,7 @@ config YAFFS_DISABLE_TAGS_ECC
 	  just relying on the MTD.
 	  This behavior can also be overridden with tags_ecc_on and
 	  tags_ecc_off mount options.
+>>>>>>> origin/incrediblec-2.6.32
 
 	  If unsure, say N.
 
@@ -148,12 +168,18 @@ config YAFFS_SHORT_NAMES_IN_RAM
 	  If unsure, say Y.
 
 config YAFFS_EMPTY_LOST_AND_FOUND
+<<<<<<< HEAD
+	bool "Empty lost and found on mount"
+=======
 	bool "Empty lost and found on boot"
+>>>>>>> origin/incrediblec-2.6.32
 	depends on YAFFS_FS
 	default n
 	help
 	  If this is enabled then the contents of lost and found is
 	  automatically dumped at mount.
+<<<<<<< HEAD
+=======
 
 	  If unsure, say N.
 
@@ -188,3 +214,4 @@ config YAFFS_XATTR
 	 If unsure, say Y.
 
 
+>>>>>>> origin/incrediblec-2.6.32

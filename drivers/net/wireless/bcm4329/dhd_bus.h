@@ -4,7 +4,11 @@
  * Provides type definitions and function prototypes used to link the
  * DHD OS, bus, and protocol modules.
  *
+<<<<<<< HEAD
+ * Copyright (C) 1999-2009, Broadcom Corporation
+=======
  * Copyright (C) 1999-2010, Broadcom Corporation
+>>>>>>> origin/incrediblec-2.6.32
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +28,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
+ * $Id: dhd_bus.h,v 1.4.6.3.2.3.6.5 2009/06/02 21:56:30 Exp $
+=======
  * $Id: dhd_bus.h,v 1.4.6.3.2.3.6.6 2010/05/17 18:18:13 Exp $
+>>>>>>> origin/incrediblec-2.6.32
  */
 
 #ifndef _dhd_bus_h_
@@ -60,10 +68,13 @@ extern int dhd_bus_rxctl(struct dhd_bus *bus, uchar *msg, uint msglen);
 /* Watchdog timer function */
 extern bool dhd_bus_watchdog(dhd_pub_t *dhd);
 
+<<<<<<< HEAD
+=======
 #ifdef DHD_DEBUG
 /* Device console input function */
 extern int dhd_bus_console_in(dhd_pub_t *dhd, uchar *msg, uint msglen);
 #endif
+>>>>>>> origin/incrediblec-2.6.32
 
 /* Deferred processing for the bus, return TRUE requests reschedule */
 extern bool dhd_bus_dpc(struct dhd_bus *bus);

@@ -976,7 +976,10 @@ BWL_PRE_PACKED_STRUCT struct dot11_management_notification {
 #define DOT11_MNG_EXT_CSA_ID			60	
 #define	DOT11_MNG_HT_ADD			61	
 #define	DOT11_MNG_EXT_CHANNEL_OFFSET		62	
+<<<<<<< HEAD
+=======
 #define DOT11_MNG_WAPI_ID				68	
+>>>>>>> origin/incrediblec-2.6.32
 #define	DOT11_MNG_HT_BSS_COEXINFO_ID		72	
 #define	DOT11_MNG_HT_BSS_CHANNEL_REPORT_ID	73	
 #define	DOT11_MNG_HT_OBSS_ID			74	
@@ -1423,8 +1426,11 @@ typedef struct vndr_ie vndr_ie_t;
 #define AES_KEY_SIZE		16	
 #define AES_MIC_SIZE		8	
 
+<<<<<<< HEAD
+=======
 #define SMS4_KEY_LEN		16
 #define SMS4_WPI_CBC_MAC_LEN	16
+>>>>>>> origin/incrediblec-2.6.32
 
 
 #include <packed_section_end.h>

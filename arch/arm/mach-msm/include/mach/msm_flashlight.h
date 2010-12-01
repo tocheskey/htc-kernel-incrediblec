@@ -37,7 +37,10 @@ enum flashlight_mode_flags {
 	FL_MODE_TORCH_LED_B,
 	FL_MODE_TORCH_LEVEL_1,
 	FL_MODE_TORCH_LEVEL_2,
+<<<<<<< HEAD
+=======
 	FL_MODE_DEATH_RAY,
+>>>>>>> origin/incrediblec-2.6.32
 };
 
 struct flashlight_platform_data {

@@ -32,8 +32,11 @@
 #include <mach/camera.h>
 #include <asm/cacheflush.h>
 #include <linux/rtc.h>
+<<<<<<< HEAD
+=======
 #include <linux/slab.h>
 #include <mach/msm_flashlight.h>
+>>>>>>> origin/incrediblec-2.6.32
 DEFINE_MUTEX(hlist_mut);
 
 #define MSM_MAX_CAMERA_SENSORS 5
@@ -998,7 +1001,10 @@ static int msm_get_stats(struct msm_sync *sync, void __user *arg)
 		se.ctrl_cmd.resp_fd = ctrl->resp_fd;
 		break;
 
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_MSM_CAMERA_V4L2
+>>>>>>> origin/incrediblec-2.6.32
 	case MSM_CAM_Q_V4L2_REQ:
 		/* control command from v4l2 client */
 		ctrl = (struct msm_ctrl_cmd *)(qcmd->command);
@@ -1021,7 +1027,10 @@ static int msm_get_stats(struct msm_sync *sync, void __user *arg)
 		se.ctrl_cmd.type   = ctrl->type;
 		se.ctrl_cmd.length = ctrl->length;
 		break;
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> origin/incrediblec-2.6.32
 
 	default:
 		rc = -EFAULT;
@@ -1823,10 +1832,13 @@ int msm_camera_flash(struct msm_sync *sync, int level)
 	sync->sdata->flash_cfg->postpone_led_mode = MSM_CAMERA_LED_OFF;
 
 	switch (level) {
+<<<<<<< HEAD
+=======
 	case MSM_CAMERA_LED_DEATH_RAY:
 		flash_level = FL_MODE_DEATH_RAY;
 		phy_flash = 1;
 		break;
+>>>>>>> origin/incrediblec-2.6.32
 	case MSM_CAMERA_LED_LOW_FOR_SNAPSHOT:
 		/* postpone set led low*/
 		sync->sdata->flash_cfg->postpone_led_mode = MSM_CAMERA_LED_LOW;
@@ -2441,7 +2453,10 @@ static int msm_open_control(struct inode *inode, struct file *filep)
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_MSM_CAMERA_V4L2
+>>>>>>> origin/incrediblec-2.6.32
 static int __msm_v4l2_control(struct msm_sync *sync,
 		struct msm_ctrl_cmd *out)
 {
@@ -2478,7 +2493,10 @@ end:
 	CDBG("%s: rc %d\n", __func__, rc);
 	return rc;
 }
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> origin/incrediblec-2.6.32
 
 static const struct file_operations msm_fops_config = {
 	.owner = THIS_MODULE,
@@ -2704,7 +2722,11 @@ error:
 	return ret;
 }
 
+<<<<<<< HEAD
+
+=======
 #ifdef CONFIG_MSM_CAMERA_V4L2
+>>>>>>> origin/incrediblec-2.6.32
 int msm_v4l2_register(struct msm_v4l2_driver *drv)
 {
 	/* FIXME: support multiple sensors */
@@ -2731,7 +2753,10 @@ int msm_v4l2_unregister(struct msm_v4l2_driver *drv)
 	return 0;
 }
 EXPORT_SYMBOL(msm_v4l2_unregister);
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> origin/incrediblec-2.6.32
 
 static int msm_sync_init(struct msm_sync *sync,
 		struct platform_device *pdev,

@@ -1,7 +1,11 @@
 /*
  * Description.
  *
+<<<<<<< HEAD
+ * Copyright (C) 1999-2009, Broadcom Corporation
+=======
  * Copyright (C) 1999-2010, Broadcom Corporation
+>>>>>>> origin/incrediblec-2.6.32
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you

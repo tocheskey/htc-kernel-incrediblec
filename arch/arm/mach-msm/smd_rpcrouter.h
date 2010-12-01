@@ -35,7 +35,10 @@
 #if defined(CONFIG_ARCH_MSM7X30)
 #define RPCROUTER_PEND_REPLIES_MAX		32
 #endif
+<<<<<<< HEAD
+=======
 #define RPCROUTER_DATASIZE_MAX			500
+>>>>>>> origin/incrediblec-2.6.32
 
 #define RPCROUTER_CLIENT_BCAST_ID		0xffffffff
 #define RPCROUTER_ROUTER_ADDRESS		0xfffffffe
@@ -153,6 +156,8 @@ struct msm_rpc_reply {
 };
 #endif
 
+<<<<<<< HEAD
+=======
 struct msm_reply_route {
 	uint32_t xid;
 	uint32_t pid;
@@ -162,6 +167,7 @@ struct msm_reply_route {
 
 #define MAX_REPLY_ROUTE 4
 
+>>>>>>> origin/incrediblec-2.6.32
 struct msm_rpc_endpoint {
 	struct list_head list;
 
@@ -193,12 +199,24 @@ struct msm_rpc_endpoint {
 	uint32_t dst_prog; /* be32 */
 	uint32_t dst_vers; /* be32 */
 
+<<<<<<< HEAD
+	/* reply remote address
+	 * if reply_pid == 0xffffffff, none available
+	 * RPC_REPLY writes may only go to the pid/cid/xid of the
+	 * last RPC_CALL we received.
+	 */
+	uint32_t reply_pid;
+	uint32_t reply_cid;
+	uint32_t reply_xid; /* be32 */
+	uint32_t next_pm;   /* Pacmark sequence */
+=======
 	/* RPC_REPLY writes must be routed to the pid/cid of the
 	 * RPC_CALL they are in reply to.  Keep a cache of valid
 	 * xid/pid/cid groups.  pid 0xffffffff -> not valid.
 	 */
 	unsigned next_rroute;
 	struct msm_reply_route rroute[MAX_REPLY_ROUTE];
+>>>>>>> origin/incrediblec-2.6.32
 
 #if defined(CONFIG_ARCH_MSM7X30)
 	/* reply queue for inbound messages */

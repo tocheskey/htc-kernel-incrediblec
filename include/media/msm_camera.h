@@ -78,7 +78,10 @@
 #define MSM_CAMERA_LED_LOW  1
 #define MSM_CAMERA_LED_HIGH 2
 #define MSM_CAMERA_LED_LOW_FOR_SNAPSHOT 3
+<<<<<<< HEAD
+=======
 #define MSM_CAMERA_LED_DEATH_RAY 4
+>>>>>>> origin/incrediblec-2.6.32
 
 #define MSM_CAM_IOCTL_FLASH_LED_CFG \
 	_IOW(MSM_CAM_IOCTL_MAGIC, 22, unsigned *)

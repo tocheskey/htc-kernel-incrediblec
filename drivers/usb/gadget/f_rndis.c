@@ -23,7 +23,11 @@
 /* #define VERBOSE_DEBUG */
 
 #include <linux/kernel.h>
+<<<<<<< HEAD
+#include <linux/platform_device.h>
+=======
 #include <linux/device.h>
+>>>>>>> origin/incrediblec-2.6.32
 #include <linux/etherdevice.h>
 #include <linux/usb/android_composite.h>
 
@@ -95,7 +99,10 @@ struct f_rndis {
 	atomic_t			notify_count;
 };
 
+<<<<<<< HEAD
+=======
 static char		manufacturer [10] = "HTC";
+>>>>>>> origin/incrediblec-2.6.32
 static inline struct f_rndis *func_to_rndis(struct usb_function *f)
 {
 	return container_of(f, struct f_rndis, port.func);
@@ -128,9 +135,22 @@ static struct usb_interface_descriptor rndis_control_intf __initdata = {
 	/* .bInterfaceNumber = DYNAMIC */
 	/* status endpoint is optional; this could be patched later */
 	.bNumEndpoints =	1,
+<<<<<<< HEAD
+#ifdef CONFIG_USB_ANDROID_RNDIS_WCEIS
+	/* "Wireless" RNDIS; auto-detected by Windows */
+	.bInterfaceClass =	USB_CLASS_WIRELESS_CONTROLLER,
+	.bInterfaceSubClass = 1,
+	.bInterfaceProtocol =	3,
+#else
 	.bInterfaceClass =	USB_CLASS_COMM,
 	.bInterfaceSubClass =   USB_CDC_SUBCLASS_ACM,
 	.bInterfaceProtocol =   USB_CDC_ACM_PROTO_VENDOR,
+#endif
+=======
+	.bInterfaceClass =	USB_CLASS_COMM,
+	.bInterfaceSubClass =   USB_CDC_SUBCLASS_ACM,
+	.bInterfaceProtocol =   USB_CDC_ACM_PROTO_VENDOR,
+>>>>>>> origin/incrediblec-2.6.32
 	/* .iInterface = DYNAMIC */
 };
 
@@ -286,6 +306,13 @@ static struct usb_gadget_strings *rndis_strings[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
+#ifdef CONFIG_USB_ANDROID_RNDIS
+static struct usb_ether_platform_data *rndis_pdata;
+#endif
+
+=======
+>>>>>>> origin/incrediblec-2.6.32
 /*-------------------------------------------------------------------------*/
 
 static struct sk_buff *rndis_add_header(struct gether *port,
@@ -583,7 +610,10 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
 	struct f_rndis		*rndis = func_to_rndis(f);
 	int			status;
 	struct usb_ep		*ep;
+<<<<<<< HEAD
+=======
 	u32	vendorID = 0x0bb4;
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* allocate instance-specific interface IDs */
 	status = usb_interface_id(c, f);
@@ -689,9 +719,19 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
 	rndis_set_param_medium(rndis->config, NDIS_MEDIUM_802_3, 0);
 	rndis_set_host_mac(rndis->config, rndis->ethaddr);
 
+<<<<<<< HEAD
+#ifdef CONFIG_USB_ANDROID_RNDIS
+	if (rndis_pdata) {
+		if (rndis_set_param_vendor(rndis->config, rndis_pdata->vendorID,
+					rndis_pdata->vendorDescr))
+			goto fail;
+	}
+#endif
+=======
 	if (rndis_set_param_vendor(rndis->config, vendorID,
 				manufacturer))
 		goto fail;
+>>>>>>> origin/incrediblec-2.6.32
 
 	/* NOTE:  all that is done without knowing or caring about
 	 * the network link ... which is unavailable to this code
@@ -816,7 +856,11 @@ int __init rndis_bind_config(struct usb_configuration *c, u8 ethaddr[ETH_ALEN])
 	rndis->port.wrap = rndis_add_header;
 	rndis->port.unwrap = rndis_rm_hdr;
 
+<<<<<<< HEAD
+	rndis->port.func.name = "rndis";
+=======
 	rndis->port.func.name = "ether";
+>>>>>>> origin/incrediblec-2.6.32
 	rndis->port.func.strings = rndis_strings;
 	/* descriptors are per-instance copies */
 	rndis->port.func.bind = rndis_bind;
@@ -842,6 +886,37 @@ fail:
 #ifdef CONFIG_USB_ANDROID_RNDIS
 #include "rndis.c"
 
+<<<<<<< HEAD
+static int __init rndis_probe(struct platform_device *pdev)
+{
+	rndis_pdata = pdev->dev.platform_data;
+	return 0;
+}
+
+static struct platform_driver rndis_platform_driver = {
+	.driver = { .name = "rndis", },
+	.probe = rndis_probe,
+};
+
+int rndis_function_bind_config(struct usb_configuration *c)
+{
+	int ret;
+
+	if (!rndis_pdata) {
+		printk(KERN_ERR "rndis_pdata null in rndis_function_bind_config\n");
+		return -1;
+	}
+
+	printk(KERN_INFO
+		"rndis_function_bind_config MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
+		rndis_pdata->ethaddr[0], rndis_pdata->ethaddr[1],
+		rndis_pdata->ethaddr[2], rndis_pdata->ethaddr[3],
+		rndis_pdata->ethaddr[4], rndis_pdata->ethaddr[5]);
+
+	ret = gether_setup(c->cdev->gadget, rndis_pdata->ethaddr);
+	if (ret == 0)
+		ret = rndis_bind_config(c, rndis_pdata->ethaddr);
+=======
 // FIXME - using bogus MAC address for now
 
 static u8 ethaddr[ETH_ALEN] = { 11, 22, 33, 44, 55, 66 };
@@ -851,17 +926,26 @@ int rndis_function_bind_config(struct usb_configuration *c)
 	int ret = gether_setup(c->cdev->gadget, ethaddr);
 	if (ret == 0)
 		ret = rndis_bind_config(c, ethaddr);
+>>>>>>> origin/incrediblec-2.6.32
 	return ret;
 }
 
 static struct android_usb_function rndis_function = {
+<<<<<<< HEAD
+	.name = "rndis",
+=======
 	.name = "ether",
+>>>>>>> origin/incrediblec-2.6.32
 	.bind_config = rndis_function_bind_config,
 };
 
 static int __init init(void)
 {
 	printk(KERN_INFO "f_rndis init\n");
+<<<<<<< HEAD
+	platform_driver_register(&rndis_platform_driver);
+=======
+>>>>>>> origin/incrediblec-2.6.32
 	android_register_function(&rndis_function);
 	return 0;
 }

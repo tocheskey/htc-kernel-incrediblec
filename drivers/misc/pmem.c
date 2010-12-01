@@ -953,6 +953,10 @@ lock_mm:
 	 * once */
 	if (PMEM_IS_SUBMAP(data) && !mm) {
 		pmem_unlock_data_and_mm(data, mm);
+<<<<<<< HEAD
+		up_write(&data->sem);
+=======
+>>>>>>> origin/incrediblec-2.6.32
 		goto lock_mm;
 	}
 	/* now check that vma.mm is still there, it could have been
