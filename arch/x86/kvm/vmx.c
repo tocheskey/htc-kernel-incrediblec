@@ -651,10 +651,7 @@ static void vmx_save_host_state(struct kvm_vcpu *vcpu)
 #endif
 
 #ifdef CONFIG_X86_64
-	if (is_long_mode(&vmx->vcpu))
-		save_msrs(vmx->host_msrs +
-			  vmx->msr_offset_kernel_gs_base, 1);
-
+	save_msrs(vmx->host_msrs + vmx->msr_offset_kernel_gs_base, 1);
 #endif
 	load_msrs(vmx->guest_msrs, vmx->save_nmsrs);
 	load_transition_efer(vmx);
@@ -670,7 +667,11 @@ static void __vmx_load_host_state(struct vcpu_vmx *vmx)
 	++vmx->vcpu.stat.host_state_reload;
 	vmx->host_state.loaded = 0;
 	if (vmx->host_state.fs_reload_needed)
-		kvm_load_fs(vmx->host_state.fs_sel);
+		loadsegment(fs, vmx->host_state.fs_sel);
+#ifdef CONFIG_X86_64
+	if (is_long_mode(&vmx->vcpu))
+		save_msrs(vmx->guest_msrs + vmx->msr_offset_kernel_gs_base, 1);
+#endif
 	if (vmx->host_state.gs_ldt_reload_needed) {
 		kvm_load_ldt(vmx->host_state.ldt_sel);
 		/*
@@ -680,11 +681,18 @@ static void __vmx_load_host_state(struct vcpu_vmx *vmx)
 		local_irq_save(flags);
 		kvm_load_gs(vmx->host_state.gs_sel);
 #ifdef CONFIG_X86_64
-		wrmsrl(MSR_GS_BASE, vmcs_readl(HOST_GS_BASE));
+		load_gs_index(vmx->host_state.gs_sel);
+#else
+		loadsegment(gs, vmx->host_state.gs_sel);
 #endif
 		local_irq_restore(flags);
 	}
 	reload_tss();
+#ifdef CONFIG_X86_64
+	save_msrs(vmx->guest_msrs, vmx->msr_offset_kernel_gs_base);
+	save_msrs(vmx->guest_msrs + vmx->msr_offset_kernel_gs_base + 1,
+		  vmx->save_nmsrs - vmx->msr_offset_kernel_gs_base - 1);
+#else
 	save_msrs(vmx->guest_msrs, vmx->save_nmsrs);
 	load_msrs(vmx->host_msrs, vmx->save_nmsrs);
 	reload_host_efer(vmx);

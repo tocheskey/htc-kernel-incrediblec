@@ -70,7 +70,6 @@
 
 #ifdef CONFIG_X86_32
 u8 apicid_2_node[MAX_APICID];
-static int low_mappings;
 #endif
 
 /* State of each CPU */
@@ -292,6 +291,18 @@ notrace static void __cpuinit start_secondary(void *unused)
 	 * fragile that we want to limit the things done here to the
 	 * most necessary things.
 	 */
+
+#ifdef CONFIG_X86_32
+	/*
+	 * Switch away from the trampoline page-table
+	 *
+	 * Do this before cpu_init() because it needs to access per-cpu
+	 * data which may not be mapped in the trampoline page-table.
+	 */
+	load_cr3(swapper_pg_dir);
+	__flush_tlb_all();
+#endif
+
 	vmi_bringup();
 	cpu_init();
 	preempt_disable();
@@ -309,12 +320,6 @@ notrace static void __cpuinit start_secondary(void *unused)
 		enable_NMI_through_LVT0();
 		enable_8259A_irq(0);
 	}
-
-#ifdef CONFIG_X86_32
-	while (low_mappings)
-		cpu_relax();
-	__flush_tlb_all();
-#endif
 
 	/* This must be done before setting cpu_online_mask */
 	set_cpu_sibling_map(raw_smp_processor_id());
@@ -885,20 +890,8 @@ int __cpuinit native_cpu_up(unsigned int cpu)
 
 	per_cpu(cpu_state, cpu) = CPU_UP_PREPARE;
 
-#ifdef CONFIG_X86_32
-	/* init low mem mapping */
-	clone_pgd_range(swapper_pg_dir, swapper_pg_dir + KERNEL_PGD_BOUNDARY,
-		min_t(unsigned long, KERNEL_PGD_PTRS, KERNEL_PGD_BOUNDARY));
-	flush_tlb_all();
-	low_mappings = 1;
-
 	err = do_boot_cpu(apicid, cpu);
 
-	zap_low_mappings(false);
-	low_mappings = 0;
-#else
-	err = do_boot_cpu(apicid, cpu);
-#endif
 	if (err) {
 		pr_debug("do_boot_cpu failed %d\n", err);
 		return -EIO;
