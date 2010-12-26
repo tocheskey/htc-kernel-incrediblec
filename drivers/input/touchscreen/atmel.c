@@ -901,6 +901,27 @@ static int atmel_ts_probe(struct i2c_client *client,
 		ts->id->version, ts->id->build,
 		ts->id->matrix_x_size, ts->id->matrix_y_size,
 		ts->id->num_declared_objects);
+		
+	/*
+		Begin ffolkes multitouch selection
+			Purpose: Some hardware cannot support more than 3 multitouch points.
+			If 004F touch sensor is present, revert to 3-point multitouch.
+		BEGIN
+	*/
+	
+	if(ts->id->family_id == 0x4F && pdata->config_T9[14] != 3)
+	{
+		printk(KERN_INFO "%d point multitouch disabled due to possible hardware conflict, reverting to 3-point\n", pdata->config_T9[14]);
+		pdata->config_T9[14] = 3;
+	} 
+	else 
+	{
+		printk(KERN_INFO "%d point multitouch enabled\n", pdata->config_T9[14]);
+	}
+	
+	/*
+		END
+	*/
 
 	/* Read object table. */
 	ts->object_table = kzalloc(sizeof(struct object_t)*ts->id->num_declared_objects, GFP_KERNEL);
