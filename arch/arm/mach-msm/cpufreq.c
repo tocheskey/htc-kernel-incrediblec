@@ -22,6 +22,10 @@
 #include <linux/init.h>
 #include "acpuclock.h"
 
+/* Fix CPU clock speeds on boot to prevent overclock */
+#define CPUFREQ_MAX 998400
+#define CPUFREQ_MIN 128000
+
 #ifdef CONFIG_MSM_CPU_FREQ_SCREEN
 static void msm_early_suspend(struct early_suspend *handler) {
 	acpuclk_set_rate(CONFIG_MSM_CPU_FREQ_SCREEN_OFF * 1000, 0);
